@@ -152,9 +152,9 @@ export function Login() {
           </form>
 
           <div style={{ marginTop: "2rem", paddingTop: "1.5rem", borderTop: `1px solid ${T.stone}40`, textAlign: "center" }}>
-            <p className="mono" style={{ fontSize: "0.7rem", color: T.mid, marginBottom: "0.5rem" }}>DEMO CREDENTIALS:</p>
+            {/* <p className="mono" style={{ fontSize: "0.7rem", color: T.mid, marginBottom: "0.5rem" }}>DEMO CREDENTIALS:</p>
             <p className="mono" style={{ fontSize: "0.65rem", color: T.light }}>Admin: admin@example.com / password</p>
-            <p className="mono" style={{ fontSize: "0.65rem", color: T.light }}>Researcher: researcher@example.com / password</p>
+            <p className="mono" style={{ fontSize: "0.65rem", color: T.light }}>Researcher: researcher@example.com / password</p> */}
           </div>
         </div>
       </div>

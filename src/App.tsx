@@ -9,8 +9,6 @@ import { GlobalStyles } from "./components/NewLayout/GlobalStyles";
 import { Nav } from "./components/NewLayout/Nav";
 import { Footer } from "./components/NewLayout/Footer";
 
-// Legacy Layout
-import { LegacyLayout } from "./components/LegacyLayout";
 
 // New Pages
 import { Home } from "./pages/public/Home";
@@ -63,36 +61,28 @@ function App() {
             {/* Auth */}
             <Route path="/login" element={<><Nav /><div style={{ paddingTop: 80 }}><Login /></div><Footer /></>} />
 
-            {/* Dashboard / Admin - Legacy Layout */}
+            {/* Dashboard / Admin - New Layout */}
             <Route path="/dashboard" element={
               <ProtectedRoute>
-                <LegacyLayout>
-                  <ResearcherDashboard />
-                </LegacyLayout>
+                <><Nav /><ResearcherDashboard /><Footer /></>
               </ProtectedRoute>
             } />
 
             <Route path="/dashboard/new-post" element={
               <ProtectedRoute>
-                <LegacyLayout>
-                  <PostEditor />
-                </LegacyLayout>
+                <><Nav /><div style={{ paddingTop: 80 }}><PostEditor /></div><Footer /></>
               </ProtectedRoute>
             } />
 
             <Route path="/dashboard/edit/:id" element={
               <ProtectedRoute>
-                <LegacyLayout>
-                  <PostEditor />
-                </LegacyLayout>
+                <><Nav /><div style={{ paddingTop: 80 }}><PostEditor /></div><Footer /></>
               </ProtectedRoute>
             } />
 
             <Route path="/admin" element={
               <ProtectedRoute requireAdmin>
-                <LegacyLayout>
-                  <AdminDashboard />
-                </LegacyLayout>
+                <><Nav /><AdminDashboard /><Footer /></>
               </ProtectedRoute>
             } />
 

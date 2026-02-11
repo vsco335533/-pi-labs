@@ -79,14 +79,14 @@ export function Videos() {
                 subtitle="Watch documentaries, research briefings, and community stories from Pi Labs Commons."
             />
 
-            <div style={{ padding: "5rem 2.5rem", maxWidth: 1200, margin: "0 auto" }}>
+            <div style={{ padding: "var(--section-pad) var(--side-pad)", maxWidth: 1200, margin: "0 auto" }}>
                 {/* ADMIN ADD VIDEO */}
                 {isAdmin && (
-                    <div style={{ marginBottom: "4rem", padding: "2rem", background: T.offWhite, borderRadius: 16 }}>
-                        <h3 className="serif" style={{ fontSize: "1.2rem", marginBottom: "1rem" }}>Add YouTube Video</h3>
-                        <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
+                    <div style={{ marginBottom: "4rem", padding: "2.5rem", background: T.offWhite, borderRadius: 16, border: `1px solid rgba(24,24,22,0.05)` }}>
+                        <h3 className="serif" style={{ fontSize: "1.25rem", marginBottom: "1.2rem" }}>Add YouTube Video</h3>
+                        <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap", alignItems: "stretch" }}>
                             <input
-                                style={{ flex: 1, padding: "0.8rem", border: `1px solid ${T.stone}`, borderRadius: 4, minWidth: 280 }}
+                                style={{ flex: "1 1 300px", padding: "0.9rem", border: `1px solid ${T.stone}`, borderRadius: 4, background: T.paper }}
                                 placeholder="Paste YouTube Video URL..."
                                 value={youtubeUrl}
                                 onChange={e => setYoutubeUrl(e.target.value)}
@@ -94,9 +94,9 @@ export function Videos() {
                             <button
                                 onClick={submitVideo}
                                 disabled={submitting}
-                                style={{ padding: "0.8rem 2rem", background: T.ink, color: T.paper, border: "none", cursor: submitting ? "wait" : "pointer", fontWeight: 600, textTransform: "uppercase", fontSize: "0.8rem", letterSpacing: "0.05em" }}
+                                style={{ padding: "0.9rem 2.22rem", background: T.ink, color: T.paper, border: "none", cursor: submitting ? "wait" : "pointer", fontWeight: 700, textTransform: "uppercase", fontSize: "0.8rem", letterSpacing: "0.06em", borderRadius: 4, transition: "opacity 0.2s" }}
                             >
-                                {submitting ? "Adding..." : "Add"}
+                                {submitting ? "Adding..." : "Add Video"}
                             </button>
                         </div>
                     </div>
@@ -104,16 +104,16 @@ export function Videos() {
 
                 {/* VIDEOS GRID */}
                 {loading ? (
-                    <div style={{ padding: "4rem", textAlign: "center", color: T.mid }}>Loading Videos...</div>
+                    <div style={{ padding: "4rem", textAlign: "center", color: T.mid, fontSize: "0.9rem", fontWeight: 500 }}>Loading Library...</div>
                 ) : videos.length === 0 ? (
-                    <div style={{ padding: "4rem", textAlign: "center", border: `1px dashed ${T.stone}`, borderRadius: 8 }}>
-                        <p style={{ color: T.mid }}>No videos found in the library.</p>
+                    <div style={{ padding: "4rem", textAlign: "center", border: `1px dashed ${T.stone}`, borderRadius: 12 }}>
+                        <p style={{ color: T.mid, fontSize: "0.95rem" }}>No videos found in the library.</p>
                     </div>
                 ) : (
-                    <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(320px, 1fr))", gap: "3rem" }}>
+                    <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(min(100%, 340px), 1fr))", gap: "clamp(2rem, 5vw, 4rem)" }}>
                         {videos.map(video => (
                             <div key={video.id} className="rv">
-                                <div style={{ position: "relative", paddingBottom: "56.25%", background: "#000", marginBottom: "1.2rem", borderRadius: 4, overflow: "hidden" }}>
+                                <div style={{ position: "relative", paddingBottom: "56.25%", background: "#000", marginBottom: "1.5rem", borderRadius: 8, overflow: "hidden", boxShadow: "0 10px 30px rgba(0,0,0,0.08)" }}>
                                     <iframe
                                         src={video.url}
                                         style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%", border: 0 }}
@@ -123,22 +123,22 @@ export function Videos() {
                                 </div>
 
                                 <div>
-                                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "0.5rem" }}>
-                                        <h3 className="serif" style={{ fontSize: "1.25rem", lineHeight: 1.3, color: T.ink }}>
+                                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "0.6rem", gap: "1rem" }}>
+                                        <h3 className="serif" style={{ fontSize: "1.35rem", lineHeight: 1.2, color: T.ink, letterSpacing: "-0.01em" }}>
                                             {video.title || "Untitled Video"}
                                         </h3>
                                         {isAdmin && (
                                             <div style={{ display: "flex", gap: "0.5rem" }}>
                                                 {video.status === "pending" && (
-                                                    <button onClick={() => approveVideo(video.id)} style={{ color: "green", cursor: "pointer", border: "none", background: "none" }} title="Approve"><Check size={18} /></button>
+                                                    <button onClick={() => approveVideo(video.id)} style={{ color: "green", cursor: "pointer", border: "none", background: "none", padding: 4 }} title="Approve"><Check size={18} /></button>
                                                 )}
-                                                <button onClick={() => deleteVideo(video.id)} style={{ color: "red", cursor: "pointer", border: "none", background: "none" }} title="Delete"><Trash2 size={18} /></button>
+                                                <button onClick={() => deleteVideo(video.id)} style={{ color: "red", cursor: "pointer", border: "none", background: "none", padding: 4 }} title="Delete"><Trash2 size={18} /></button>
                                             </div>
                                         )}
                                     </div>
 
-                                    <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", fontSize: "0.75rem", color: T.mid, fontFamily: "monospace", textTransform: "uppercase" }}>
-                                        <Clock size={12} />
+                                    <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", fontSize: "0.7rem", color: T.mid, fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.05em", borderTop: `1px solid ${T.stone}40`, paddingTop: "0.8rem" }}>
+                                        <Clock size={12} strokeWidth={2.5} />
                                         {new Date(video.created_at).toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' })}
                                     </div>
                                 </div>

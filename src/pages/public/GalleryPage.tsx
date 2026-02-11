@@ -201,13 +201,12 @@ export function Gallery() {
                 subtitle="A collection of images from our field work, community gatherings, and research trips."
             />
 
-            <div style={{ padding: "5rem 2.5rem", maxWidth: 1400, margin: "0 auto" }}>
-
+            <div style={{ padding: "var(--section-pad) var(--side-pad)", maxWidth: 1400, margin: "0 auto" }}>
                 {/* ACTIONS */}
                 {isAdmin && (
                     <div style={{ marginBottom: "3rem" }}>
                         {!showForm ? (
-                            <button onClick={() => setShowForm(true)} style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem", padding: "0.8rem 1.5rem", background: T.ink, color: T.paper, border: "none", fontSize: "0.8rem", textTransform: "uppercase", letterSpacing: "0.05em", cursor: "pointer" }}>
+                            <button onClick={() => setShowForm(true)} style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem", padding: "0.8rem 1.5rem", background: T.ink, color: T.paper, border: "none", fontSize: "0.8rem", textTransform: "uppercase", letterSpacing: "0.05em", cursor: "pointer", borderRadius: 4 }}>
                                 <Upload size={16} /> Upload Image
                             </button>
                         ) : (
@@ -217,20 +216,20 @@ export function Gallery() {
                                 <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
                                     <input placeholder="Image Name (opt)" value={imageName} onChange={e => setImageName(e.target.value)} style={{ padding: "0.8rem", border: `1px solid ${T.stone}`, borderRadius: 4 }} />
 
-                                    <div style={{ display: "flex", gap: "0.5rem" }}>
-                                        <select value={selectedCategory || ""} onChange={e => setSelectedCategory(e.target.value || null)} style={{ flex: 1, padding: "0.8rem", border: `1px solid ${T.stone}`, borderRadius: 4 }}>
+                                    <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap" }}>
+                                        <select value={selectedCategory || ""} onChange={e => setSelectedCategory(e.target.value || null)} style={{ flex: "1 1 200px", padding: "0.8rem", border: `1px solid ${T.stone}`, borderRadius: 4 }}>
                                             <option value="">Select Category...</option>
                                             {categoriesList.map(c => <option key={c.id} value={c.id}>{c.name}</option>)}
                                         </select>
-                                        <input placeholder="Or Create New Category..." value={newCategory} onChange={e => setNewCategory(e.target.value)} style={{ flex: 1, padding: "0.8rem", border: `1px solid ${T.stone}`, borderRadius: 4 }} />
+                                        <input placeholder="Or Create New..." value={newCategory} onChange={e => setNewCategory(e.target.value)} style={{ flex: "1 1 200px", padding: "0.8rem", border: `1px solid ${T.stone}`, borderRadius: 4 }} />
                                     </div>
 
-                                    <input type="file" accept="image/*" onChange={e => setFileToUpload(e.target.files?.[0] || null)} />
+                                    <input type="file" accept="image/*" onChange={e => setFileToUpload(e.target.files?.[0] || null)} style={{ fontSize: "0.85rem" }} />
                                     <textarea placeholder="Description..." value={descriptionText} onChange={e => setDescriptionText(e.target.value)} rows={3} style={{ padding: "0.8rem", border: `1px solid ${T.stone}`, borderRadius: 4 }} />
 
-                                    <div style={{ display: "flex", gap: "1rem", marginTop: "1rem" }}>
-                                        <button onClick={handleUpload} disabled={uploading} style={{ padding: "0.8rem 2rem", background: T.ink, color: T.paper, border: "none", fontWeight: 600, textTransform: "uppercase" }}>{uploading ? "Uploading..." : "Upload"}</button>
-                                        <button onClick={() => setShowForm(false)} style={{ padding: "0.8rem 2rem", background: "transparent", border: `1px solid ${T.stone}`, color: T.ink, fontWeight: 600, textTransform: "uppercase" }}>Cancel</button>
+                                    <div style={{ display: "flex", gap: "1rem", marginTop: "1rem", flexWrap: "wrap" }}>
+                                        <button onClick={handleUpload} disabled={uploading} style={{ padding: "0.8rem 2rem", background: T.ink, color: T.paper, border: "none", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.05em", borderRadius: 4 }}>{uploading ? "Uploading..." : "Upload"}</button>
+                                        <button onClick={() => setShowForm(false)} style={{ padding: "0.8rem 2rem", background: "transparent", border: `1px solid ${T.stone}`, color: T.ink, fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.05em", borderRadius: 4 }}>Cancel</button>
                                     </div>
                                 </div>
                             </div>
@@ -242,7 +241,7 @@ export function Gallery() {
                 {loading ? (
                     <div style={{ textAlign: "center", padding: "4rem", color: T.mid }}>Loading Archive...</div>
                 ) : images.length === 0 ? (
-                    <div style={{ textAlign: "center", padding: "4rem", border: `1px dashed ${T.stone}` }}>No images found.</div>
+                    <div style={{ textAlign: "center", padding: "4rem", border: `1px dashed ${T.stone}`, borderRadius: 8 }}>No images found.</div>
                 ) : (
                     <div style={{ display: "flex", flexDirection: "column", gap: "4rem" }}>
                         {/* Categories */}
@@ -256,34 +255,34 @@ export function Gallery() {
                                         {editingCategory && editingCategory.id === cat.id ? (
                                             <div style={{ display: "flex", gap: "0.5rem" }}>
                                                 <input value={editingCategory.name} onChange={e => setEditingCategory({ id: editingCategory!.id, name: e.target.value })} style={{ padding: "0.4rem" }} />
-                                                <button onClick={handleUpdateCategory}><Check size={16} color="green" /></button>
-                                                <button onClick={() => setEditingCategory(null)}><X size={16} color="gray" /></button>
+                                                <button onClick={handleUpdateCategory} style={{ background: "none", border: "none", cursor: "pointer" }}><Check size={16} color="green" /></button>
+                                                <button onClick={() => setEditingCategory(null)} style={{ background: "none", border: "none", cursor: "pointer" }}><X size={16} color="gray" /></button>
                                             </div>
                                         ) : (
                                             <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
                                                 <h2 className="serif" style={{ fontSize: "1.5rem" }}>{cat.name}</h2>
                                                 {isAdmin && (
                                                     <div style={{ display: "flex", gap: "0.5rem" }}>
-                                                        <button onClick={() => setEditingCategory({ id: cat.id, name: cat.name })}><Edit size={14} color="gray" /></button>
-                                                        <button onClick={() => handleDeleteCategory(cat.id)}><Trash2 size={14} color="gray" /></button>
+                                                        <button onClick={() => setEditingCategory({ id: cat.id, name: cat.name })} style={{ background: "none", border: "none" }}><Edit size={14} color="gray" /></button>
+                                                        <button onClick={() => handleDeleteCategory(cat.id)} style={{ background: "none", border: "none" }}><Trash2 size={14} color="gray" /></button>
                                                     </div>
                                                 )}
                                             </div>
                                         )}
                                     </div>
 
-                                    <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(250px, 1fr))", gap: "1.5rem" }}>
+                                    <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(min(100%, 280px), 1fr))", gap: "1.5rem" }}>
                                         {items.map(img => (
                                             <div key={img.id} className="rv" onClick={() => setSelectedImage(img)} style={{ cursor: "pointer" }}>
-                                                <div style={{ aspectRatio: "4/3", background: T.stone, marginBottom: "0.8rem", overflow: "hidden" }}>
+                                                <div style={{ aspectRatio: "4/3", background: T.stone, marginBottom: "0.8rem", overflow: "hidden", borderRadius: 4 }}>
                                                     <img src={img.url} alt={img.title} style={{ width: "100%", height: "100%", objectFit: "cover", transition: "transform 0.5s" }} onMouseEnter={e => e.currentTarget.style.transform = "scale(1.05)"} onMouseLeave={e => e.currentTarget.style.transform = "scale(1)"} />
                                                 </div>
                                                 <h4 className="serif" style={{ fontSize: "1rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{img.title}</h4>
-                                                <p className="mono" style={{ fontSize: "0.65rem", color: T.mid, textTransform: "uppercase" }}>{new Date(img.created_at).toLocaleDateString()}</p>
+                                                <p className="mono" style={{ fontSize: "0.6rem", color: T.mid, textTransform: "uppercase", letterSpacing: "0.05em" }}>{new Date(img.created_at).toLocaleDateString()}</p>
 
                                                 {isAdmin && (
                                                     <div style={{ marginTop: "0.5rem", display: "flex", gap: "0.5rem" }}>
-                                                        {img.status === "pending" && <button onClick={(e) => { e.stopPropagation(); approveImage(img.id) }} style={{ color: "green", border: "none", background: "none", cursor: "pointer" }}>Approve</button>}
+                                                        {img.status === "pending" && <button onClick={(e) => { e.stopPropagation(); approveImage(img.id) }} style={{ color: "green", border: "none", background: "none", cursor: "pointer", fontSize: "0.7rem", fontWeight: 700 }}>Approve</button>}
                                                         <button onClick={(e) => { e.stopPropagation(); deleteImage(img.id) }} style={{ color: "red", border: "none", background: "none", cursor: "pointer" }}><Trash2 size={14} /></button>
                                                     </div>
                                                 )}
@@ -298,10 +297,10 @@ export function Gallery() {
                         {images.filter(img => !img.image_category_id).length > 0 && (
                             <div>
                                 <h2 className="serif" style={{ fontSize: "1.5rem", marginBottom: "1.5rem", borderBottom: `1px solid ${T.stone}40`, paddingBottom: "0.5rem" }}>Uncategorized</h2>
-                                <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(250px, 1fr))", gap: "1.5rem" }}>
+                                <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(min(100%, 280px), 1fr))", gap: "1.5rem" }}>
                                     {images.filter(img => !img.image_category_id).map(img => (
                                         <div key={img.id} className="rv" onClick={() => setSelectedImage(img)} style={{ cursor: "pointer" }}>
-                                            <div style={{ aspectRatio: "4/3", background: T.stone, marginBottom: "0.8rem", overflow: "hidden" }}>
+                                            <div style={{ aspectRatio: "4/3", background: T.stone, marginBottom: "0.8rem", overflow: "hidden", borderRadius: 4 }}>
                                                 <img src={img.url} alt={img.title} style={{ width: "100%", height: "100%", objectFit: "cover", transition: "transform 0.5s" }} onMouseEnter={e => e.currentTarget.style.transform = "scale(1.05)"} onMouseLeave={e => e.currentTarget.style.transform = "scale(1)"} />
                                             </div>
                                             <h4 className="serif" style={{ fontSize: "1rem" }}>{img.title}</h4>
@@ -322,32 +321,34 @@ export function Gallery() {
 
             {/* LIGHTBOX */}
             {selectedImage && (
-                <div style={{ position: "fixed", top: 0, left: 0, right: 0, bottom: 0, zIndex: 2000, background: "rgba(0,0,0,0.9)", display: "flex", alignItems: "center", justifyContent: "center", padding: "2rem" }} onClick={() => setSelectedImage(null)}>
-                    <div style={{ position: "relative", maxWidth: "90%", maxHeight: "90%", background: T.paper, borderRadius: 8, overflow: "hidden", display: "flex", flexDirection: "column" }} onClick={e => e.stopPropagation()}>
-                        <div style={{ flex: 1, overflow: "hidden", background: "#000", display: "flex", alignItems: "center", justifyContent: "center", minHeight: 400, minWidth: 600 }}>
-                            <img src={selectedImage.url} alt={selectedImage.title} style={{ maxWidth: "100%", maxHeight: "80vh", objectFit: "contain" }} />
+                <div style={{ position: "fixed", top: 0, left: 0, right: 0, bottom: 0, zIndex: 2000, background: "rgba(18,18,16,0.96)", backdropFilter: "blur(10px)", display: "flex", alignItems: "center", justifyContent: "center", padding: "1rem" }} onClick={() => setSelectedImage(null)}>
+                    <div style={{ position: "relative", width: "100%", maxWidth: 1000, maxHeight: "95vh", background: T.paper, borderRadius: 12, overflow: "hidden", display: "flex", flexDirection: "column", boxShadow: "0 30px 100px rgba(0,0,0,0.5)" }} onClick={e => e.stopPropagation()}>
+                        <div style={{ flex: 1, overflow: "hidden", background: "#000", display: "flex", alignItems: "center", justifyContent: "center", minHeight: "clamp(300px, 50vh, 600px)" }}>
+                            <img src={selectedImage.url} alt={selectedImage.title} style={{ maxWidth: "100%", maxHeight: "75vh", objectFit: "contain" }} />
                         </div>
-                        <div style={{ padding: "1.5rem", background: T.paper }}>
+                        <div style={{ padding: "1.5rem 2rem", background: T.paper }}>
                             {isEditing ? (
-                                <div style={{ display: "flex", gap: "1rem", alignItems: "flex-end" }}>
-                                    <div style={{ flex: 1 }}>
-                                        <label style={{ display: "block", fontSize: "0.7rem", color: T.mid }}>Title</label>
-                                        <input value={editTitle} onChange={e => setEditTitle(e.target.value)} style={{ width: "100%", padding: "0.5rem", border: "1px solid #ccc" }} />
+                                <div style={{ display: "flex", gap: "1rem", alignItems: "flex-end", flexWrap: "wrap" }}>
+                                    <div style={{ flex: "1 1 300px" }}>
+                                        <label style={{ display: "block", fontSize: "0.65rem", fontWeight: 700, color: T.mid, textTransform: "uppercase", letterSpacing: "0.05em", marginBottom: "0.4rem" }}>Title</label>
+                                        <input value={editTitle} onChange={e => setEditTitle(e.target.value)} style={{ width: "100%", padding: "0.7rem", border: `1px solid ${T.stone}`, borderRadius: 4 }} />
                                     </div>
-                                    <button onClick={handleSave} disabled={saving} style={{ padding: "0.6rem 1.2rem", background: T.ink, color: T.paper, border: "none" }}>SAVE</button>
-                                    <button onClick={() => setIsEditing(false)} style={{ padding: "0.6rem 1.2rem", border: "1px solid #ccc", background: "none" }}>CANCEL</button>
+                                    <div style={{ display: "flex", gap: "0.5rem" }}>
+                                        <button onClick={handleSave} disabled={saving} style={{ padding: "0.7rem 1.5rem", background: T.ink, color: T.paper, border: "none", borderRadius: 4, fontWeight: 700 }}>SAVE</button>
+                                        <button onClick={() => setIsEditing(false)} style={{ padding: "0.7rem 1.5rem", border: `1px solid ${T.stone}`, background: "none", borderRadius: 4, fontWeight: 700 }}>CANCEL</button>
+                                    </div>
                                 </div>
                             ) : (
-                                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
+                                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: "1rem" }}>
                                     <div>
-                                        <h2 className="serif" style={{ fontSize: "1.5rem", marginBottom: "0.5rem" }}>{selectedImage.title}</h2>
-                                        <p className="body-serif" style={{ fontSize: "1rem", color: T.light }}>{selectedImage.description}</p>
+                                        <h2 className="serif" style={{ fontSize: "clamp(1.2rem, 3vw, 1.8rem)", marginBottom: "0.5rem", color: T.ink }}>{selectedImage.title}</h2>
+                                        <p className="body-serif" style={{ fontSize: "1rem", color: T.light, lineHeight: 1.6 }}>{selectedImage.description}</p>
                                     </div>
-                                    {isAdmin && <button onClick={() => setIsEditing(true)}><Edit size={18} color="gray" /></button>}
+                                    {isAdmin && <button onClick={() => setIsEditing(true)} style={{ background: "none", border: "none", cursor: "pointer", padding: 8 }}><Edit size={18} color={T.mid} /></button>}
                                 </div>
                             )}
                         </div>
-                        <button onClick={() => setSelectedImage(null)} style={{ position: "absolute", top: 10, right: 10, background: "rgba(255,255,255,0.2)", border: "none", color: "#fff", borderRadius: "50%", width: 32, height: 32, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center" }}><X size={20} /></button>
+                        <button onClick={() => setSelectedImage(null)} style={{ position: "absolute", top: 15, right: 15, background: "rgba(255,255,255,0.15)", border: "none", color: "#fff", borderRadius: "50%", width: 36, height: 36, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", backdropFilter: "blur(10px)" }}><X size={20} /></button>
                     </div>
                 </div>
             )}

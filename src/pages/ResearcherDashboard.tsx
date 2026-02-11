@@ -4,6 +4,7 @@ import { Plus, FileText, Edit, Trash2, Eye, Clock } from "lucide-react";
 import { useAuth } from "../contexts/AuthContext";
 import { apiGet, apiDelete } from "../lib/api";
 import { Post } from "../types";
+import { T } from "../components/NewLayout/GlobalStyles";
 
 export function ResearcherDashboard() {
   const { profile } = useAuth();
@@ -59,183 +60,185 @@ export function ResearcherDashboard() {
     }
   };
 
-  const getStatusColor = (status: string) => {
-    switch (status) {
-      case "published":
-        return "bg-green-100 text-green-800";
-      case "draft":
-        return "bg-gray-100 text-gray-800";
-      case "submitted":
-        return "bg-gray-100 text-gray-800";
-      case "under_review":
-        return "bg-yellow-100 text-yellow-800";
-      case "rejected":
-        return "bg-red-100 text-red-800";
-      default:
-        return "bg-gray-100 text-gray-800";
-    }
-  };
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">
+    <div className="min-h-screen" style={{ background: T.paper }}>
+      <div style={{ padding: "var(--section-pad) var(--side-pad)", maxWidth: 1400, margin: "0 auto" }}>
+        <div style={{ marginBottom: "3rem" }}>
+          <h1 className="serif" style={{ fontSize: "var(--fluid-h1)", marginBottom: "0.5rem", color: T.ink }}>
             My Dashboard
           </h1>
-          <p className="text-gray-600">
+          <p className="body-serif" style={{ color: T.mid }}>
             Manage your research publications and content
           </p>
         </div>
 
         {/* Stats Section */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-          <div className="bg-white rounded-xl border border-gray-200 p-4 md:p-6 shadow-sm">
-            <div className="flex items-center justify-between mb-2">
-              <span className="text-gray-500 text-xs font-medium uppercase">Total Posts</span>
-              <FileText className="w-5 h-5 text-gray-400" />
+        <div style={{
+          display: "grid",
+          gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
+          gap: "1.5rem",
+          marginBottom: "4rem"
+        }}>
+          {[
+            { label: "Total Posts", value: stats.total, icon: FileText, color: T.mid },
+            { label: "Published", value: stats.published, icon: FileText, color: "#10b981" },
+            { label: "Drafts", value: stats.draft, icon: Clock, color: T.light },
+            { label: "Total Views", value: stats.views, icon: Eye, color: "#8b5cf6" },
+          ].map((stat, i) => (
+            <div key={i} style={{
+              background: T.offWhite,
+              padding: "2rem",
+              borderRadius: 16,
+              border: `1px solid ${T.stone}40`,
+              display: "flex",
+              flexDirection: "column",
+              gap: "1rem"
+            }}>
+              <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                <span style={{ fontSize: "0.65rem", fontWeight: 700, color: T.light, textTransform: "uppercase", letterSpacing: "0.05em" }}>{stat.label}</span>
+                <stat.icon size={18} color={stat.color} />
+              </div>
+              <p style={{ fontSize: "2.5rem", fontWeight: 700, color: T.ink, lineHeight: 1 }}>{stat.value}</p>
             </div>
-            <p className="text-2xl md:text-3xl font-bold text-gray-900">{stats.total}</p>
-          </div>
-
-          <div className="bg-white rounded-xl border border-gray-200 p-4 md:p-6 shadow-sm">
-            <div className="flex items-center justify-between mb-2">
-              <span className="text-gray-500 text-xs font-medium uppercase">Published</span>
-              <FileText className="w-5 h-5 text-green-500" />
-            </div>
-            <p className="text-2xl md:text-3xl font-bold text-gray-900">
-              {stats.published}
-            </p>
-          </div>
-
-          <div className="bg-white rounded-xl border border-gray-200 p-4 md:p-6 shadow-sm">
-            <div className="flex items-center justify-between mb-2">
-              <span className="text-gray-500 text-xs font-medium uppercase">Drafts</span>
-              <Clock className="w-5 h-5 text-gray-400" />
-            </div>
-            <p className="text-2xl md:text-3xl font-bold text-gray-900">{stats.draft}</p>
-          </div>
-
-          <div className="bg-white rounded-xl border border-gray-200 p-4 md:p-6 shadow-sm">
-            <div className="flex items-center justify-between mb-2">
-              <span className="text-gray-500 text-xs font-medium uppercase">Total Views</span>
-              <Eye className="w-5 h-5 text-purple-500" />
-            </div>
-            <p className="text-2xl md:text-3xl font-bold text-gray-900">{stats.views}</p>
-          </div>
+          ))}
         </div>
 
-        {/* Posts Table */}
-        <div className="bg-white rounded-xl border border-gray-200 overflow-hidden shadow-sm">
-          <div className="p-6 border-b border-gray-200 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-            <h2 className="text-xl font-bold text-gray-900">My Posts</h2>
+        {/* Posts Section */}
+        <div style={{ background: T.paper, borderRadius: 24, border: `1px solid ${T.stone}40`, overflow: "hidden", boxShadow: "0 20px 50px rgba(0,0,0,0.03)" }}>
+          <div style={{ padding: "2rem", borderBottom: `1px solid ${T.stone}40`, display: "flex", flexWrap: "wrap", alignItems: "center", justifyContent: "space-between", gap: "1.5rem" }}>
+            <h2 className="serif" style={{ fontSize: "1.5rem", color: T.ink }}>My Publications</h2>
             <Link
               to="/dashboard/new-post"
-              className="w-full sm:w-auto flex items-center justify-center gap-2 bg-gray-700 text-white px-5 py-2.5 rounded-lg hover:bg-gray-800 transition-all font-semibold shadow-md"
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "0.5rem",
+                background: T.ink,
+                color: T.paper,
+                padding: "0.8rem 1.5rem",
+                borderRadius: 8,
+                textDecoration: "none",
+                fontSize: "0.8rem",
+                fontWeight: 700,
+                textTransform: "uppercase",
+                letterSpacing: "0.05em",
+                transition: "opacity 0.2s"
+              }}
+              onMouseEnter={(e) => (e.currentTarget.style.opacity = "0.9")}
+              onMouseLeave={(e) => (e.currentTarget.style.opacity = "1")}
             >
-              <Plus className="w-5 h-5" />
-              New Post
+              <Plus size={18} />
+              New Publication
             </Link>
           </div>
 
-          <div className="overflow-x-auto">
+          <div style={{ width: "100%" }}>
             {loading ? (
-              <div className="p-12 text-center">
-                <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-gray-600 mx-auto"></div>
+              <div style={{ padding: "5rem", textAlign: "center" }}>
+                <div style={{ width: "2rem", height: "2rem", border: `2px solid ${T.stone}`, borderTopColor: T.ink, borderRadius: "50%", animation: "spin 1s linear infinite", margin: "0 auto" }}></div>
+                <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
               </div>
             ) : posts.length === 0 ? (
-              <div className="p-12 text-center">
-                <div className="bg-gray-50 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <FileText className="w-8 h-8 text-gray-300" />
+              <div style={{ padding: "5rem 2rem", textAlign: "center" }}>
+                <div style={{ background: T.offWhite, width: "4rem", height: "4rem", borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 1.5rem" }}>
+                  <FileText size={24} color={T.stone} />
                 </div>
-                <p className="text-gray-500 mb-6 max-w-xs mx-auto">
-                  You haven't created any research publications yet. Start by creating a new post.
+                <p style={{ color: T.mid, marginBottom: "2rem", maxWidth: "300px", margin: "0 auto 2rem" }}>
+                  You haven't created any research publications yet.
                 </p>
                 <Link
                   to="/dashboard/new-post"
-                  className="inline-flex items-center gap-2 text-gray-700 hover:text-gray-900 font-bold underline underline-offset-4"
+                  style={{ color: T.ink, fontWeight: 700, textDecoration: "none", borderBottom: `2px solid ${T.ink}` }}
                 >
-                  <Plus className="w-4 h-4" />
                   Create your first post
                 </Link>
               </div>
             ) : (
-              <table className="w-full min-w-[800px]">
-                <thead className="bg-gray-50 border-b border-gray-100">
-                  <tr>
-                    <th className="px-6 py-4 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">
-                      Title
-                    </th>
-                    <th className="px-6 py-4 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">
-                      Type
-                    </th>
-                    <th className="px-6 py-4 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">
-                      Status
-                    </th>
-                    <th className="px-6 py-4 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">
-                      Views
-                    </th>
-                    <th className="px-6 py-4 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">
-                      Actions
-                    </th>
-                  </tr>
-                </thead>
-
-                <tbody className="bg-white divide-y divide-gray-100">
-                  {posts.map((post) => (
-                    <tr key={post.id} className="hover:bg-gray-50/50 transition-colors">
-                      <td className="px-6 py-4">
-                        <div className="text-sm font-semibold text-gray-900 max-w-md truncate">
-                          {post.title}
-                        </div>
-                        <div className="text-xs text-gray-400 mt-1">
-                          {new Date(post.created_at).toLocaleDateString()}
-                        </div>
-                      </td>
-
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <span className="text-sm text-gray-600 capitalize">
-                          {post.type.replace("_", " ")}
-                        </span>
-                      </td>
-
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <span
-                          className={`px-3 py-1 inline-flex text-[10px] font-bold uppercase tracking-wider rounded-full ${getStatusColor(
-                            post.status
-                          )}`}
-                        >
-                          {post.status.replace("_", " ")}
-                        </span>
-                      </td>
-
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 font-medium">
-                        {post.view_count || 0}
-                      </td>
-
-                      <td className="px-6 py-4 whitespace-nowrap text-sm">
-                        <div className="flex items-center gap-3">
-                          <Link
-                            to={`/dashboard/edit/${post.slug}`}
-                            className="p-1.5 text-gray-400 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-all"
-                            title="Edit Post"
-                          >
-                            <Edit className="w-4 h-4" />
-                          </Link>
-
-                          <button
-                            onClick={() => handleDelete(post.id)}
-                            className="p-1.5 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-all"
-                            title="Delete Post"
-                          >
-                            <Trash2 className="w-4 h-4" />
-                          </button>
-                        </div>
-                      </td>
+              <div className="table-responsive">
+                <style>{`
+                  @media (max-width: 640px) {
+                    .hide-mobile { display: none !important; }
+                    .dashboard-table thead { display: none; }
+                    .dashboard-table tr { display: flex; flexDirection: column; padding: 1.5rem; borderBottom: 1px solid ${T.stone}30; }
+                    .dashboard-table td { padding: 0.25rem 0; border: none !important; }
+                    .dashboard-table .actions-cell { marginTop: 1rem; display: flex; gap: 1rem; }
+                  }
+                `}</style>
+                <table className="dashboard-table" style={{ width: "100%", borderCollapse: "collapse" }}>
+                  <thead className="hide-mobile" style={{ background: T.offWhite, borderBottom: `1px solid ${T.stone}40` }}>
+                    <tr>
+                      <th style={{ padding: "1.2rem 2rem", textAlign: "left", fontSize: "0.65rem", fontWeight: 700, color: T.light, textTransform: "uppercase", letterSpacing: "0.1em" }}>Title</th>
+                      <th style={{ padding: "1.2rem 2rem", textAlign: "left", fontSize: "0.65rem", fontWeight: 700, color: T.light, textTransform: "uppercase", letterSpacing: "0.1em" }}>Type</th>
+                      <th style={{ padding: "1.2rem 2rem", textAlign: "left", fontSize: "0.65rem", fontWeight: 700, color: T.light, textTransform: "uppercase", letterSpacing: "0.1em" }}>Status</th>
+                      <th style={{ padding: "1.2rem 2rem", textAlign: "left", fontSize: "0.65rem", fontWeight: 700, color: T.light, textTransform: "uppercase", letterSpacing: "0.1em" }}>Views</th>
+                      <th style={{ padding: "1.2rem 2rem", textAlign: "right", fontSize: "0.65rem", fontWeight: 700, color: T.light, textTransform: "uppercase", letterSpacing: "0.1em" }}>Actions</th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
+                  </thead>
+
+                  <tbody>
+                    {posts.map((post) => (
+                      <tr key={post.id} style={{ borderBottom: `1px solid ${T.stone}20` }}>
+                        <td style={{ padding: "1.5rem 2rem" }}>
+                          <div style={{ fontWeight: 600, color: T.ink, marginBottom: "0.25rem" }}>{post.title}</div>
+                          <div style={{ fontSize: "0.7rem", color: T.mid }}>{new Date(post.created_at).toLocaleDateString()}</div>
+                        </td>
+
+                        <td style={{ padding: "1.5rem 2rem" }}>
+                          <span style={{ fontSize: "0.75rem", color: T.mid, textTransform: "capitalize" }}>{post.type.replace("_", " ")}</span>
+                        </td>
+
+                        <td style={{ padding: "1.5rem 2rem" }}>
+                          <span style={{
+                            fontSize: "0.6rem",
+                            fontWeight: 700,
+                            textTransform: "uppercase",
+                            padding: "0.3rem 0.6rem",
+                            borderRadius: 4,
+                            background: post.status === "published" ? "#ecfdf5" : "#f3f4f6",
+                            color: post.status === "published" ? "#065f46" : "#374151",
+                            letterSpacing: "0.05em"
+                          }}>
+                            {post.status.replace("_", " ")}
+                          </span>
+                        </td>
+
+                        <td style={{ padding: "1.5rem 2rem", fontSize: "0.85rem", color: T.mid, fontWeight: 500 }}>
+                          {post.view_count || 0}
+                        </td>
+
+                        <td className="actions-cell" style={{ padding: "1.5rem 2rem", textAlign: "right" }}>
+                          <div style={{ display: "flex", justifyContent: "flex-end", gap: "0.75rem" }}>
+                            <Link
+                              to={`/dashboard/edit/${post.slug}`}
+                              style={{ color: T.mid, padding: "0.5rem", borderRadius: 4, transition: "background 0.2s" }}
+                              onMouseEnter={(e) => (e.currentTarget.style.background = T.offWhite)}
+                              onMouseLeave={(e) => (e.currentTarget.style.background = "none")}
+                            >
+                              <Edit size={16} />
+                            </Link>
+
+                            <button
+                              onClick={() => handleDelete(post.id)}
+                              style={{ color: T.mid, background: "none", border: "none", cursor: "pointer", padding: "0.5rem", borderRadius: 4, transition: "color 0.2s, background 0.2s" }}
+                              onMouseEnter={(e) => {
+                                e.currentTarget.style.color = "#ef4444";
+                                e.currentTarget.style.background = "#fef2f2";
+                              }}
+                              onMouseLeave={(e) => {
+                                e.currentTarget.style.color = T.mid;
+                                e.currentTarget.style.background = "none";
+                              }}
+                            >
+                              <Trash2 size={16} />
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
             )}
           </div>
         </div>

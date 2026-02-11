@@ -43,41 +43,43 @@ export function Nav() {
     <nav
       style={{
         position: "fixed", top: 0, left: 0, right: 0, zIndex: 1000,
-        padding: scrolled ? "0.55rem 2.5rem" : "0.85rem 2.5rem",
+        padding: scrolled ? "0.6rem var(--side-pad)" : "1rem var(--side-pad)",
         display: "flex", justifyContent: "space-between", alignItems: "center",
-        backdropFilter: "blur(24px)", WebkitBackdropFilter: "blur(24px)",
-        background: scrolled ? "rgba(242,241,237,0.95)" : "rgba(242,241,237,0.8)",
+        backdropFilter: open ? "none" : "blur(24px)",
+        WebkitBackdropFilter: open ? "none" : "blur(24px)",
+        background: open ? "#f2f1ed" : (scrolled ? "rgba(242,241,237,0.95)" : "rgba(242,241,237,0.8)"),
         borderBottom: `1px solid rgba(24,24,22,${scrolled ? 0.06 : 0.03})`,
-        transition: "all 0.4s ease",
+        transition: "all 0.4s cubic-bezier(0.16, 1, 0.3, 1)",
         boxShadow: scrolled ? "0 1px 30px rgba(0,0,0,0.04)" : "none",
       }}
     >
-      <Link to="/" style={{ display: "flex", alignItems: "center", gap: "0.7rem", textDecoration: 'none', color: 'inherit', flexShrink: 0 }}>
-        <img src={LOGO_SRC} alt="π" style={{ height: scrolled ? 34 : 40, width: scrolled ? 34 : 40, objectFit: "contain", transition: "all 0.3s" }} />
+      <Link to="/" style={{ display: "flex", alignItems: "center", gap: "0.7rem", textDecoration: 'none', color: 'inherit', flexShrink: 0, zIndex: 1100 }}>
+        <img src={LOGO_SRC} alt="π" style={{ height: scrolled ? 32 : 38, width: scrolled ? 32 : 38, objectFit: "contain", transition: "all 0.3s" }} />
         <span className="serif" style={{
-          fontSize: "clamp(0.85rem, 1.2vw + 0.5rem, 1.1rem)",
+          fontSize: "clamp(0.9rem, 1.2vw + 0.4rem, 1.05rem)",
           letterSpacing: "-0.01em",
           fontWeight: 600,
           whiteSpace: "nowrap"
         }}>
-          Pi Labs Commons Research Foundation
+          Pi Labs Commons
+          <span className="hidden-mobile"> Research Foundation</span>
         </span>
       </Link>
 
       {/* Desktop links */}
       <div style={{
         display: "flex",
-        gap: "clamp(0.4rem, 0.9vw, 1.5rem)",
+        gap: "clamp(0.5rem, 1vw, 1.8rem)",
         alignItems: "center"
-      }} className="nav-desktop hidden lg:flex">
+      }} className="hidden-mobile">
         {links.map((l) => (
           <Link
             key={l.to}
             to={l.to}
             style={{
-              fontSize: "clamp(0.65rem, 0.75vw, 0.77rem)",
-              fontWeight: 500,
-              letterSpacing: "0.05em",
+              fontSize: "0.72rem",
+              fontWeight: 600,
+              letterSpacing: "0.06em",
               textTransform: "uppercase",
               color: isActive(l.to) ? T.ink : T.mid,
               borderBottom: isActive(l.to) ? `1.5px solid ${T.accent}` : "1.5px solid transparent",
@@ -95,18 +97,19 @@ export function Nav() {
         {user ? (
           <div style={{
             display: "flex",
-            gap: "clamp(0.4rem, 0.8vw, 1rem)",
+            gap: "1rem",
             alignItems: "center",
             borderLeft: `1px solid ${T.stone}`,
-            paddingLeft: "clamp(0.4rem, 0.8vw, 1rem)",
+            paddingLeft: "1rem",
+            marginLeft: "0.5rem",
             flexShrink: 0
           }}>
             <Link
               to="/dashboard"
               style={{
-                fontSize: "clamp(0.65rem, 0.75vw, 0.77rem)",
+                fontSize: "0.72rem",
                 fontWeight: 600,
-                letterSpacing: "0.05em",
+                letterSpacing: "0.06em",
                 textTransform: "uppercase", color: T.accent, textDecoration: "none",
                 whiteSpace: "nowrap"
               }}
@@ -116,9 +119,9 @@ export function Nav() {
             <button
               onClick={handleSignOut}
               style={{
-                fontSize: "clamp(0.65rem, 0.75vw, 0.77rem)",
-                fontWeight: 500,
-                letterSpacing: "0.05em",
+                fontSize: "0.72rem",
+                fontWeight: 600,
+                letterSpacing: "0.06em",
                 textTransform: "uppercase", color: T.mid, background: "none", border: "none", cursor: "pointer",
                 padding: 0,
                 whiteSpace: "nowrap"
@@ -131,16 +134,18 @@ export function Nav() {
           <Link
             to="/login"
             style={{
-              fontSize: "clamp(0.65rem, 0.75vw, 0.77rem)",
-              fontWeight: 500,
-              letterSpacing: "0.05em",
+              fontSize: "0.72rem",
+              fontWeight: 600,
+              letterSpacing: "0.06em",
               textTransform: "uppercase",
-              color: isActive("/login") ? T.ink : T.mid,
+              color: T.paper,
+              background: T.ink,
               textDecoration: "none",
               whiteSpace: "nowrap",
-              padding: "0.35rem 0.75rem",
-              border: `1px solid ${isActive("/login") ? T.ink : T.stone}`,
-              borderRadius: "4px"
+              padding: "0.45rem 1.2rem",
+              borderRadius: "4px",
+              marginLeft: "0.5rem",
+              transition: "all 0.3s"
             }}
           >
             Sign In
@@ -150,53 +155,189 @@ export function Nav() {
 
       {/* Hamburger */}
       <button
-        className="nav-hamburger lg:hidden flex"
         onClick={() => setOpen(!open)}
         style={{
-          flexDirection: "column", gap: 5, background: "none",
-          border: "none", cursor: "pointer", padding: 4,
-          flexShrink: 0
+          display: "flex",
+          flexDirection: "column", gap: 6, background: open ? "rgba(24,24,22,0.05)" : "none",
+          border: "none", cursor: "pointer",
+          padding: "12px",
+          borderRadius: "12px",
+          zIndex: 1100,
+          position: "relative",
+          transition: "all 0.3s",
+          outline: "none",
+          WebkitTapHighlightColor: "transparent"
         }}
+        className="hidden-desktop"
         aria-label="Menu"
       >
-        <span style={{ width: 22, height: 1.5, background: T.ink, transition: "all 0.3s", transform: open ? "rotate(45deg) translate(4px,4px)" : "none" }} />
-        <span style={{ width: 22, height: 1.5, background: T.ink, transition: "all 0.3s", opacity: open ? 0 : 1 }} />
-        <span style={{ width: 22, height: 1.5, background: T.ink, transition: "all 0.3s", transform: open ? "rotate(-45deg) translate(4px,-4px)" : "none" }} />
+        <span style={{ width: 22, height: 2, background: T.ink, transition: "all 0.4s cubic-bezier(0.16, 1, 0.3, 1)", transform: open ? "translateY(8px) rotate(45deg)" : "none" }} />
+        <span style={{ width: open ? 22 : 14, height: 2, background: T.ink, transition: "all 0.3s ease", opacity: open ? 0 : 1, alignSelf: "flex-end" }} />
+        <span style={{ width: 22, height: 2, background: T.ink, transition: "all 0.4s cubic-bezier(0.16, 1, 0.3, 1)", transform: open ? "translateY(-8px) rotate(-45deg)" : "none" }} />
       </button>
 
-      {/* Mobile menu */}
-      {open && (
-        <div
-          style={{
-            position: "absolute", top: "100%", left: 0, right: 0,
-            background: "rgba(242,241,237,0.98)", backdropFilter: "blur(20px)",
-            padding: "1.5rem 2.5rem", display: "flex", flexDirection: "column", gap: "1rem",
-            borderBottom: `1px solid rgba(24,24,22,0.06)`,
-          }}
-        >
-          {links.map((l) => (
-            <Link key={l.to} to={l.to} onClick={() => setOpen(false)}
-              style={{ fontSize: "0.85rem", fontWeight: 500, letterSpacing: "0.05em", textTransform: "uppercase", color: isActive(l.to) ? T.ink : T.mid, textDecoration: "none" }}>
-              {l.label}
-            </Link>
-          ))}
-          <div style={{ width: "100%", height: 1, background: T.stone, margin: "0.5rem 0" }} />
-          {user ? (
-            <>
-              <Link to="/dashboard" onClick={() => setOpen(false)} style={{ fontSize: "0.85rem", fontWeight: 600, letterSpacing: "0.05em", textTransform: "uppercase", color: T.accent, textDecoration: "none" }}>
-                Dashboard
-              </Link>
-              <button onClick={(e) => { handleSignOut(e); setOpen(false); }} style={{ textAlign: "left", fontSize: "0.85rem", fontWeight: 500, letterSpacing: "0.05em", textTransform: "uppercase", color: T.mid, background: "none", border: "none" }}>
-                Sign Out
-              </button>
-            </>
-          ) : (
-            <Link to="/login" onClick={() => setOpen(false)} style={{ fontSize: "0.85rem", fontWeight: 500, letterSpacing: "0.05em", textTransform: "uppercase", color: T.ink, textDecoration: "none" }}>
-              Sign In
-            </Link>
-          )}
+      {/* Mobile Menu Drawer */}
+      <div
+        style={{
+          position: "fixed", top: 0, right: 0, bottom: 0, left: 0,
+          background: "rgba(24,24,22,0.4)",
+          backdropFilter: "blur(4px)",
+          opacity: open ? 1 : 0,
+          pointerEvents: open ? "auto" : "none",
+          transition: "opacity 0.5s ease",
+          zIndex: 1050
+        }}
+        onClick={() => setOpen(false)}
+      />
+
+      <div
+        style={{
+          position: "fixed",
+          top: 0,
+          right: 0,
+          bottom: 0,
+          width: "100%", // Full width for mobile to ensure no bleed on sides
+          maxWidth: "450px",
+          height: "100dvh", // Use dynamic viewport height
+          display: "flex",
+          flexDirection: "column",
+          transform: `translateX(${open ? '0' : '100%'})`,
+          transition: "transform 0.5s cubic-bezier(0.16, 1, 0.3, 1)",
+          zIndex: 10000,
+          visibility: open ? "visible" : "hidden",
+          backgroundColor: "#f2f1ed", // Solid background on the container itself
+          boxShadow: "-10px 0 50px rgba(0,0,0,0.2)",
+          overflowY: "auto",
+          overscrollBehavior: "contain"
+        }}
+        onClick={(e) => e.stopPropagation()}
+      >
+        <div style={{ padding: "1.5rem 2.5rem 0", display: "flex", justifyContent: "flex-end", flexShrink: 0 }}>
+          <button
+            onClick={() => setOpen(false)}
+            style={{
+              width: 48, height: 48, borderRadius: "50%",
+              background: "rgba(24,24,22,0.05)",
+              border: "none", cursor: "pointer",
+              display: "flex", alignItems: "center", justifyContent: "center",
+              transition: "all 0.3s ease",
+              outline: "none",
+              WebkitTapHighlightColor: "transparent"
+            }}
+            onMouseEnter={(e) => e.currentTarget.style.background = "rgba(24,24,22,0.1)"}
+            onMouseLeave={(e) => e.currentTarget.style.background = "rgba(24,24,22,0.05)"}
+            aria-label="Close menu"
+          >
+            <div style={{ position: "relative", width: 20, height: 20 }}>
+              <span style={{ position: "absolute", top: "50%", left: 0, width: "100%", height: 2, background: "#181816", transform: "rotate(45deg)", borderRadius: 2 }} />
+              <span style={{ position: "absolute", top: "50%", left: 0, width: "100%", height: 2, background: "#181816", transform: "rotate(-45deg)", borderRadius: 2 }} />
+            </div>
+          </button>
         </div>
-      )}
+
+        <div style={{ padding: "2rem 2.5rem 2.5rem", flex: 1, display: "flex", flexDirection: "column" }}>
+          <div style={{ display: "flex", flexDirection: "column", gap: "0.8rem" }}>
+            {links.map((l, i) => (
+              <Link
+                key={l.to}
+                to={l.to}
+                onClick={() => setOpen(false)}
+                style={{
+                  fontSize: "clamp(1.5rem, 4vw, 2rem)",
+                  fontWeight: 700,
+                  color: isActive(l.to) ? "#b33d26" : "#181816",
+                  textDecoration: "none",
+                  transform: `translateX(${open ? '0' : '40px'})`,
+                  opacity: open ? 1 : 0,
+                  transition: `all 0.6s cubic-bezier(0.16, 1, 0.3, 1) ${0.1 + i * 0.05}s`,
+                  letterSpacing: "-0.03em",
+                  display: "block",
+                  padding: "0.2rem 0"
+                }}
+                className="serif"
+              >
+                {l.label}
+              </Link>
+            ))}
+          </div>
+
+          <div style={{ marginTop: "auto", paddingTop: "2rem", borderTop: `1px solid ${T.stone}30` }}>
+            {user ? (
+              <div style={{ display: "flex", flexDirection: "column", gap: "1.2rem" }}>
+                <Link
+                  to="/dashboard"
+                  onClick={() => setOpen(false)}
+                  style={{
+                    fontSize: "0.8rem",
+                    fontWeight: 800,
+                    letterSpacing: "0.15em",
+                    textTransform: "uppercase",
+                    color: T.accent,
+                    textDecoration: "none",
+                    opacity: open ? 1 : 0,
+                    transition: "all 0.5s ease 0.6s"
+                  }}
+                >
+                  Dashboard
+                </Link>
+                <button
+                  onClick={(e) => { handleSignOut(e); setOpen(false); }}
+                  style={{
+                    textAlign: "left",
+                    fontSize: "0.8rem",
+                    fontWeight: 700,
+                    letterSpacing: "0.15em",
+                    textTransform: "uppercase",
+                    color: T.mid,
+                    background: "none",
+                    border: "none",
+                    cursor: "pointer",
+                    padding: 0,
+                    opacity: open ? 1 : 0,
+                    transition: "all 0.5s ease 0.65s"
+                  }}
+                >
+                  Sign Out
+                </button>
+              </div>
+            ) : (
+              <Link
+                to="/login"
+                onClick={() => setOpen(false)}
+                style={{
+                  display: "block",
+                  textAlign: "center",
+                  padding: "1.2rem",
+                  background: T.ink,
+                  color: T.paper,
+                  borderRadius: "8px",
+                  fontSize: "0.8rem",
+                  fontWeight: 800,
+                  letterSpacing: "0.15em",
+                  textTransform: "uppercase",
+                  textDecoration: "none",
+                  boxShadow: "0 10px 20px rgba(0,0,0,0.1)",
+                  opacity: open ? 1 : 0,
+                  transition: "all 0.5s ease 0.6s"
+                }}
+              >
+                Sign In
+              </Link>
+            )}
+
+            <div style={{
+              marginTop: "2.5rem",
+              fontSize: "0.6rem",
+              color: T.stone,
+              letterSpacing: "0.1em",
+              textTransform: "uppercase",
+              fontWeight: 600
+            }}>
+              © 2024 Pi Labs Commons Foundation
+            </div>
+          </div>
+        </div>
+      </div>
     </nav>
   );
 }

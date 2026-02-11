@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Users, FileText, Eye, CheckCircle, Clock } from "lucide-react";
 import { apiGet, apiPost } from "../lib/api";
 import { Post, Profile, ContactSubmission } from "../types";
+import { T } from "../components/NewLayout/GlobalStyles";
 
 export function AdminDashboard() {
   const [activeTab, setActiveTab] = useState<"overview" | "posts" | "researchers" | "responses">("overview");
@@ -73,39 +74,47 @@ export function AdminDashboard() {
     { id: "responses", label: "Responses" },
   ] as const;
 
-  const getStatusColor = (status: string) => {
-    switch (status) {
-      case "published": return "bg-green-100 text-green-800";
-      case "draft": return "bg-gray-100 text-gray-800";
-      case "submitted": return "bg-yellow-100 text-yellow-800";
-      case "under_review": return "bg-blue-100 text-blue-800";
-      case "rejected": return "bg-red-100 text-red-800";
-      default: return "bg-gray-100 text-gray-800";
-    }
-  };
 
   return (
-    <div className="min-h-screen bg-gray-50/50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 py-8 md:py-12">
-        <div className="mb-10">
-          <h1 className="text-3xl md:text-4xl font-extrabold text-gray-900 mb-2 tracking-tight">
-            Admin Dashboard
+    <div className="min-h-screen" style={{ background: T.paper }}>
+      <div style={{ padding: "var(--section-pad) var(--side-pad)", maxWidth: 1400, margin: "0 auto" }}>
+        <div style={{ marginBottom: "3rem" }}>
+          <h1 className="serif" style={{ fontSize: "var(--fluid-h1)", marginBottom: "0.5rem", color: T.ink }}>
+            Admin Control
           </h1>
-          <p className="text-gray-500 font-medium">
+          <p className="body-serif" style={{ color: T.mid }}>
             Manage researchers, content, and platform settings
           </p>
         </div>
 
         {/* TABS NAVIGATION */}
-        <div className="flex flex-wrap gap-2 mb-8 bg-white p-1.5 rounded-xl border border-gray-200 w-fit shadow-sm">
+        <div style={{
+          display: "flex",
+          flexWrap: "wrap",
+          gap: "0.5rem",
+          marginBottom: "3rem",
+          background: T.offWhite,
+          padding: "0.4rem",
+          borderRadius: 12,
+          width: "fit-content",
+          border: `1px solid ${T.stone}40`
+        }}>
           {tabs.map((tab) => (
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
-              className={`px-6 py-2.5 rounded-lg text-sm font-bold transition-all duration-200 ${activeTab === tab.id
-                ? "bg-red-600 text-white shadow-md shadow-red-100"
-                : "text-gray-500 hover:text-gray-900 hover:bg-gray-50"
-                }`}
+              style={{
+                padding: "0.7rem 1.5rem",
+                borderRadius: 8,
+                fontSize: "0.8rem",
+                fontWeight: 700,
+                border: "none",
+                cursor: "pointer",
+                transition: "all 0.3s cubic-bezier(0.16, 1, 0.3, 1)",
+                background: activeTab === tab.id ? T.ink : "transparent",
+                color: activeTab === tab.id ? T.paper : T.mid,
+                boxShadow: activeTab === tab.id ? "0 10px 20px rgba(0,0,0,0.1)" : "none"
+              }}
             >
               {tab.label}
             </button>
@@ -113,143 +122,180 @@ export function AdminDashboard() {
         </div>
 
         {/* STATS SECTION */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 md:gap-6 mb-10">
+        <div style={{
+          display: "grid",
+          gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
+          gap: "1.5rem",
+          marginBottom: "4rem"
+        }}>
           {[
-            { label: "Total Posts", value: stats.totalPosts, icon: FileText, color: "text-gray-400" },
-            { label: "Published", value: stats.publishedPosts, icon: CheckCircle, color: "text-green-500" },
-            { label: "Pending", value: stats.pendingPosts, icon: Clock, color: "text-yellow-500" },
-            { label: "Researchers", value: stats.totalResearchers, icon: Users, color: "text-purple-500" },
-            { label: "Total Views", value: stats.totalViews, icon: Eye, color: "text-teal-500" },
+            { label: "Total Posts", value: stats.totalPosts, icon: FileText, color: T.mid },
+            { label: "Published", value: stats.publishedPosts, icon: CheckCircle, color: "#10b981" },
+            { label: "Pending", value: stats.pendingPosts, icon: Clock, color: "#f59e0b" },
+            { label: "Researchers", value: stats.totalResearchers, icon: Users, color: "#8b5cf6" },
+            { label: "Total Views", value: stats.totalViews, icon: Eye, color: "#06b6d4" },
           ].map((stat, i) => (
-            <div key={i} className="bg-white rounded-2xl border border-gray-200 p-6 shadow-sm hover:shadow-md transition-shadow">
-              <div className="flex items-center justify-between mb-4">
-                <span className="text-gray-400 text-[10px] font-bold uppercase tracking-widest">{stat.label}</span>
-                <stat.icon className={`w-5 h-5 ${stat.color}`} />
+            <div key={i} style={{
+              background: T.paper,
+              padding: "2rem",
+              borderRadius: 20,
+              border: `1px solid ${T.stone}40`,
+              display: "flex",
+              flexDirection: "column",
+              gap: "1rem",
+              boxShadow: "0 10px 30px rgba(0,0,0,0.02)"
+            }}>
+              <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                <span style={{ fontSize: "0.6rem", fontWeight: 800, color: T.light, textTransform: "uppercase", letterSpacing: "0.1em" }}>{stat.label}</span>
+                <stat.icon size={18} color={stat.color} />
               </div>
-              <p className="text-3xl font-extrabold text-gray-900">{stat.value}</p>
+              <p style={{ fontSize: "2.5rem", fontWeight: 700, color: T.ink, lineHeight: 1 }}>{stat.value}</p>
             </div>
           ))}
         </div>
 
-        <div className="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
+        <div style={{ background: T.paper, borderRadius: 24, border: `1px solid ${T.stone}40`, overflow: "hidden", boxShadow: "0 20px 50px rgba(0,0,0,0.03)" }}>
           {activeTab === "overview" && (
-            <div className="divide-y divide-gray-100">
-              <div className="p-8 border-b border-gray-100">
-                <h2 className="text-2xl font-bold text-gray-900">Pending Approval</h2>
+            <div>
+              <div style={{ padding: "2rem", borderBottom: `1px solid ${T.stone}40` }}>
+                <h2 className="serif" style={{ fontSize: "1.5rem", color: T.ink }}>Pending Approval</h2>
               </div>
 
-              <div className="overflow-x-auto">
+              <div style={{ width: "100%" }}>
                 {loading ? (
-                  <div className="p-20 text-center">
-                    <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-red-600 mx-auto"></div>
+                  <div style={{ padding: "5rem", textAlign: "center" }}>
+                    <div style={{ width: "2rem", height: "2rem", border: `2px solid ${T.stone}`, borderTopColor: T.ink, borderRadius: "50%", animation: "spin 1s linear infinite", margin: "0 auto" }}></div>
                   </div>
                 ) : posts.filter(p => ["submitted", "under_review"].includes(p.status)).length === 0 ? (
-                  <div className="p-20 text-center text-gray-400 font-medium">
+                  <div style={{ padding: "5rem", textAlign: "center", color: T.mid, fontWeight: 500 }}>
                     No posts pending approval
                   </div>
                 ) : (
-                  <table className="w-full min-w-[800px]">
-                    <thead className="bg-gray-50/50">
-                      <tr>
-                        <th className="px-8 py-5 text-left text-[11px] font-bold text-gray-400 uppercase tracking-widest">Title</th>
-                        <th className="px-8 py-5 text-left text-[11px] font-bold text-gray-400 uppercase tracking-widest">Type</th>
-                        <th className="px-8 py-5 text-left text-[11px] font-bold text-gray-400 uppercase tracking-widest">Status</th>
-                        <th className="px-8 py-5 text-left text-[11px] font-bold text-gray-400 uppercase tracking-widest text-right">Actions</th>
-                      </tr>
-                    </thead>
-                    <tbody className="divide-y divide-gray-100">
-                      {posts.filter(p => ["submitted", "under_review"].includes(p.status)).map((post) => (
-                        <tr key={post.id} className="hover:bg-gray-50/50 transition-colors">
-                          <td className="px-8 py-6">
-                            <div className="font-bold text-gray-900 mb-1">{post.title}</div>
-                            <div className="text-xs text-gray-400">{new Date(post.created_at || '').toLocaleDateString()}</div>
-                          </td>
-                          <td className="px-8 py-6 capitalize text-sm text-gray-600 font-medium">{post.type.replace('_', ' ')}</td>
-                          <td className="px-8 py-6">
-                            <span className={`px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider ${getStatusColor(post.status)}`}>
-                              {post.status.replace('_', ' ')}
-                            </span>
-                          </td>
-                          <td className="px-8 py-6 text-right">
-                            <div className="flex justify-end gap-2">
-                              <button
-                                onClick={() => handleApprovePost(post.id)}
-                                className="px-4 py-2 bg-green-600 text-white text-xs font-bold rounded-lg hover:bg-green-700 transition-all shadow-sm"
-                              >
-                                Approve
-                              </button>
-                              <button
-                                onClick={() => handleRejectPost(post.id)}
-                                className="px-4 py-2 bg-red-600 text-white text-xs font-bold rounded-lg hover:bg-red-700 transition-all shadow-sm"
-                              >
-                                Reject
-                              </button>
-                            </div>
-                          </td>
+                  <div className="table-responsive">
+                    <style>{`
+                      @media (max-width: 640px) {
+                        .hide-mobile { display: none !important; }
+                        .admin-table thead { display: none; }
+                        .admin-table tr { display: flex; flexDirection: column; padding: 1.5rem; borderBottom: 1px solid ${T.stone}30; }
+                        .admin-table td { padding: 0.25rem 0; border: none !important; textAlign: left !important; }
+                        .admin-table .actions-cell { marginTop: 1rem; display: flex; gap: 0.5rem; justify-content: flex-start !important; }
+                      }
+                      @keyframes spin { to { transform: rotate(360deg); } }
+                    `}</style>
+                    <table className="admin-table" style={{ width: "100%", borderCollapse: "collapse" }}>
+                      <thead className="hide-mobile" style={{ background: T.offWhite, borderBottom: `1px solid ${T.stone}40` }}>
+                        <tr>
+                          <th style={{ padding: "1.2rem 2rem", textAlign: "left", fontSize: "0.65rem", fontWeight: 700, color: T.light, textTransform: "uppercase", letterSpacing: "0.1em" }}>Title</th>
+                          <th style={{ padding: "1.2rem 2rem", textAlign: "left", fontSize: "0.65rem", fontWeight: 700, color: T.light, textTransform: "uppercase", letterSpacing: "0.1em" }}>Type</th>
+                          <th style={{ padding: "1.2rem 2rem", textAlign: "left", fontSize: "0.65rem", fontWeight: 700, color: T.light, textTransform: "uppercase", letterSpacing: "0.1em" }}>Status</th>
+                          <th style={{ padding: "1.2rem 2rem", textAlign: "right", fontSize: "0.65rem", fontWeight: 700, color: T.light, textTransform: "uppercase", letterSpacing: "0.1em" }}>Actions</th>
                         </tr>
-                      ))}
-                    </tbody>
-                  </table>
+                      </thead>
+                      <tbody>
+                        {posts.filter(p => ["submitted", "under_review"].includes(p.status)).map((post) => (
+                          <tr key={post.id} style={{ borderBottom: `1px solid ${T.stone}20` }}>
+                            <td style={{ padding: "1.5rem 2rem" }}>
+                              <div style={{ fontWeight: 600, color: T.ink, marginBottom: "0.25rem" }}>{post.title}</div>
+                              <div style={{ fontSize: "0.7rem", color: T.mid }}>{new Date(post.created_at || '').toLocaleDateString()}</div>
+                            </td>
+                            <td style={{ padding: "1.5rem 2rem", fontSize: "0.75rem", color: T.mid, textTransform: "capitalize" }}>{post.type.replace('_', ' ')}</td>
+                            <td style={{ padding: "1.5rem 2rem" }}>
+                              <span style={{
+                                fontSize: "0.6rem",
+                                fontWeight: 700,
+                                textTransform: "uppercase",
+                                padding: "0.3rem 0.6rem",
+                                borderRadius: 4,
+                                background: post.status === "submitted" ? "#fffbeb" : "#eff6ff",
+                                color: post.status === "submitted" ? "#92400e" : "#1e40af",
+                                letterSpacing: "0.05em"
+                              }}>
+                                {post.status.replace('_', ' ')}
+                              </span>
+                            </td>
+                            <td className="actions-cell" style={{ padding: "1.5rem 2rem", textAlign: "right" }}>
+                              <div style={{ display: "flex", justifyContent: "flex-end", gap: "0.5rem" }}>
+                                <button
+                                  onClick={() => handleApprovePost(post.id)}
+                                  style={{ padding: "0.5rem 1rem", background: "#059669", color: "#fff", border: "none", borderRadius: 6, fontSize: "0.7rem", fontWeight: 700, textTransform: "uppercase", cursor: "pointer" }}
+                                >
+                                  Approve
+                                </button>
+                                <button
+                                  onClick={() => handleRejectPost(post.id)}
+                                  style={{ padding: "0.5rem 1rem", background: "#dc2626", color: "#fff", border: "none", borderRadius: 6, fontSize: "0.7rem", fontWeight: 700, textTransform: "uppercase", cursor: "pointer" }}
+                                >
+                                  Reject
+                                </button>
+                              </div>
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
                 )}
               </div>
             </div>
           )}
 
           {activeTab === "posts" && (
-            <div className="p-12 text-center text-gray-400 font-medium italic">
+            <div style={{ padding: "5rem", textAlign: "center", color: T.mid, fontStyle: "italic" }}>
               All platform posts management view coming soon...
             </div>
           )}
 
           {activeTab === "researchers" && (
-            <div className="p-12 text-center text-gray-400 font-medium italic">
+            <div style={{ padding: "5rem", textAlign: "center", color: T.mid, fontStyle: "italic" }}>
               Researcher management directory coming soon...
             </div>
           )}
 
           {activeTab === "responses" && (
-            <div className="divide-y divide-gray-100">
-              <div className="p-8 border-b border-gray-100">
-                <h2 className="text-2xl font-bold text-gray-900">Contact Responses</h2>
+            <div>
+              <div style={{ padding: "2rem", borderBottom: `1px solid ${T.stone}40` }}>
+                <h2 className="serif" style={{ fontSize: "1.5rem", color: T.ink }}>Contact Responses</h2>
               </div>
 
-              <div className="overflow-x-auto">
+              <div style={{ width: "100%" }}>
                 {loading ? (
-                  <div className="p-20 text-center">
-                    <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-red-600 mx-auto"></div>
+                  <div style={{ padding: "5rem", textAlign: "center" }}>
+                    <div style={{ width: "2rem", height: "2rem", border: `2px solid ${T.stone}`, borderTopColor: T.ink, borderRadius: "50%", animation: "spin 1s linear infinite", margin: "0 auto" }}></div>
                   </div>
                 ) : contacts.length === 0 ? (
-                  <div className="p-20 text-center text-gray-400 font-medium">
+                  <div style={{ padding: "5rem", textAlign: "center", color: T.mid, fontWeight: 500 }}>
                     No contact responses found
                   </div>
                 ) : (
-                  <table className="w-full min-w-[800px]">
-                    <thead className="bg-gray-50/50">
-                      <tr>
-                        <th className="px-8 py-5 text-left text-[11px] font-bold text-gray-400 uppercase tracking-widest w-1/4">Sender</th>
-                        <th className="px-8 py-5 text-left text-[11px] font-bold text-gray-400 uppercase tracking-widest w-1/2">Message</th>
-                        <th className="px-8 py-5 text-left text-[11px] font-bold text-gray-400 uppercase tracking-widest">Date</th>
-                      </tr>
-                    </thead>
-                    <tbody className="divide-y divide-gray-100">
-                      {contacts.map((contact) => (
-                        <tr key={contact.id} className="hover:bg-gray-50/50 transition-colors">
-                          <td className="px-8 py-6">
-                            <div className="font-bold text-gray-900">{contact.name}</div>
-                            <div className="text-xs text-blue-600 mt-0.5">{contact.email}</div>
-                          </td>
-                          <td className="px-8 py-6">
-                            <div className="text-sm text-gray-600 line-clamp-3 leading-relaxed whitespace-pre-wrap">
-                              {contact.message}
-                            </div>
-                          </td>
-                          <td className="px-8 py-6 text-sm text-gray-400 whitespace-nowrap">
-                            {new Date(contact.created_at).toLocaleDateString()}
-                          </td>
+                  <div className="table-responsive">
+                    <table style={{ width: "100%", borderCollapse: "collapse" }}>
+                      <thead className="hide-mobile" style={{ background: T.offWhite, borderBottom: `1px solid ${T.stone}40` }}>
+                        <tr>
+                          <th style={{ padding: "1.2rem 2rem", textAlign: "left", fontSize: "0.65rem", fontWeight: 700, color: T.light, textTransform: "uppercase", letterSpacing: "0.1em", width: "25%" }}>Sender</th>
+                          <th style={{ padding: "1.2rem 2rem", textAlign: "left", fontSize: "0.65rem", fontWeight: 700, color: T.light, textTransform: "uppercase", letterSpacing: "0.1em", width: "50%" }}>Message</th>
+                          <th style={{ padding: "1.2rem 2rem", textAlign: "right", fontSize: "0.65rem", fontWeight: 700, color: T.light, textTransform: "uppercase", letterSpacing: "0.1em" }}>Date</th>
                         </tr>
-                      ))}
-                    </tbody>
-                  </table>
+                      </thead>
+                      <tbody>
+                        {contacts.map((contact) => (
+                          <tr key={contact.id} style={{ borderBottom: `1px solid ${T.stone}20` }}>
+                            <td style={{ padding: "1.5rem 2rem" }}>
+                              <div style={{ fontWeight: 600, color: T.ink }}>{contact.name || 'Anonymous'}</div>
+                              <div style={{ fontSize: "0.75rem", color: "#2563eb", marginTop: "0.2rem" }}>{contact.email}</div>
+                            </td>
+                            <td style={{ padding: "1.5rem 2rem" }}>
+                              <div style={{ fontSize: "0.9rem", color: T.mid, lineHeight: 1.6, maxWidth: "500px" }}>
+                                {contact.message}
+                              </div>
+                            </td>
+                            <td style={{ padding: "1.5rem 2rem", textAlign: "right", fontSize: "0.75rem", color: T.light, whiteSpace: "nowrap" }}>
+                              {new Date(contact.created_at).toLocaleDateString()}
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
                 )}
               </div>
             </div>

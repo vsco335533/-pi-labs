@@ -15,6 +15,16 @@ export const GlobalStyles = () => (
   <style>{`
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;1,8..60,400&family=JetBrains+Mono:wght@400;500&family=Libre+Franklin:wght@300;400;500;600&display=swap');
 
+/* Fluid Typography & Spacing */
+:root {
+  --fluid-h1: clamp(2.4rem, 8vw, 5rem);
+  --fluid-h2: clamp(1.8rem, 5vw, 2.8rem);
+  --fluid-h3: clamp(1.4rem, 3.5vw, 1.8rem);
+  --fluid-body: clamp(0.95rem, 1.2vw, 1.15rem);
+  --section-pad: clamp(3rem, 10vw, 8rem);
+  --side-pad: clamp(1.5rem, 5vw, 4rem);
+}
+
 *, *::before, *::after {
   box-sizing: border-box;
 }
@@ -24,6 +34,7 @@ html, body {
   margin: 0;
   padding: 0;
   width: 100%;
+  -webkit-tap-highlight-color: transparent;
 }
 
 /* Hide scrollbar UI but allow scrolling */
@@ -41,12 +52,21 @@ body {
   color: ${T.ink};
   line-height: 1.65;
   -webkit-font-smoothing: antialiased;
+  font-size: var(--fluid-body);
 }
 ::selection { background: ${T.accent}; color: white; }
 
 .serif { font-family: 'Playfair Display', serif; }
 .body-serif { font-family: 'Source Serif 4', serif; }
 .mono { font-family: 'JetBrains Mono', monospace; }
+
+/* Responsive Utilities */
+.hidden-mobile {
+  @media (max-width: 768px) { display: none !important; }
+}
+.hidden-desktop {
+  @media (min-width: 769px) { display: none !important; }
+}
 
 /* Reveal animation */
 .rv { opacity: 0; transform: translateY(16px); transition: all 0.65s cubic-bezier(0.22, 1, 0.36, 1); }
