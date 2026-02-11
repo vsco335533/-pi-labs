@@ -65,7 +65,13 @@ body {
   @media (max-width: 768px) { display: none !important; }
 }
 .hidden-desktop {
-  @media (min-width: 769px) { display: none !important; }
+  @media (min-width: 1025px) { display: none !important; }
+}
+.hidden-tablet {
+  @media (max-width: 1024px) { display: none !important; }
+}
+.hidden-desktop-small {
+  @media (max-width: 1200px) { display: none !important; }
 }
 
 /* Reveal animation */

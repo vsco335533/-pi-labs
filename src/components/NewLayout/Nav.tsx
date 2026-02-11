@@ -9,7 +9,7 @@ export function Nav() {
   const [open, setOpen] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
-  const { user, signOut, isAdmin } = useAuth();
+  const { user, signOut, isAdmin, isResearcher, profile } = useAuth();
   const path = location.pathname;
 
   useEffect(() => {
@@ -64,7 +64,7 @@ export function Nav() {
         marginRight: "0.5rem"
       }}>
         <img src={LOGO_SRC} alt="π" style={{ height: scrolled ? 34 : 40, width: scrolled ? 34 : 40, objectFit: "contain", transition: "all 0.3s", flexShrink: 0 }} />
-        <div className="hidden-tablet" style={{
+        <div style={{
           display: "flex",
           flexDirection: "column",
           gap: "1px",
@@ -137,38 +137,69 @@ export function Nav() {
         {user ? (
           <div style={{
             display: "flex",
-            gap: "1rem",
             alignItems: "center",
+            gap: isResearcher ? "1rem" : "1.5rem",
             borderLeft: `1px solid ${T.stone}30`,
-            paddingLeft: "1.2rem",
+            paddingLeft: isResearcher ? "1.2rem" : "1.8rem",
             flexShrink: 0
           }}>
-            {isAdmin && (
+            {isResearcher ? (
+              <>
+                {isAdmin && (
+                  <Link
+                    to="/admin"
+                    style={{
+                      fontSize: "0.72rem",
+                      fontWeight: 600,
+                      letterSpacing: "0.05em",
+                      textTransform: "uppercase", color: T.ink, textDecoration: "none",
+                      whiteSpace: "nowrap"
+                    }}
+                  >
+                    Admin Panel
+                  </Link>
+                )}
+                <Link
+                  to="/dashboard"
+                  style={{
+                    fontSize: "0.72rem",
+                    fontWeight: 600,
+                    letterSpacing: "0.05em",
+                    textTransform: "uppercase", color: T.accent, textDecoration: "none",
+                    whiteSpace: "nowrap"
+                  }}
+                >
+                  Dashboard
+                </Link>
+              </>
+            ) : (
               <Link
-                to="/admin"
+                to="/dashboard"
                 style={{
-                  fontSize: "0.72rem",
-                  fontWeight: 600,
-                  letterSpacing: "0.05em",
-                  textTransform: "uppercase", color: T.ink, textDecoration: "none",
-                  whiteSpace: "nowrap"
+                  fontSize: "1rem", // "Somewhat big"
+                  fontWeight: 700,
+                  color: T.ink,
+                  textDecoration: "none",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "0.5rem",
+                  transition: "all 0.3s ease"
                 }}
+                onMouseEnter={(e) => e.currentTarget.style.color = T.accent}
+                onMouseLeave={(e) => e.currentTarget.style.color = T.ink}
               >
-                Admin Panel
+                <div style={{
+                  width: 32, height: 32, borderRadius: "50%", background: T.accent, color: T.paper,
+                  display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.8rem", fontWeight: 800
+                }}>
+                  {profile?.full_name?.charAt(0).toUpperCase() || "U"}
+                </div>
+                <span className="serif" style={{ fontSize: "1.05rem" }}>
+                  {profile?.full_name?.split(' ')[0] || "User"}'s Space
+                </span>
               </Link>
             )}
-            <Link
-              to="/dashboard"
-              style={{
-                fontSize: "0.72rem",
-                fontWeight: 600,
-                letterSpacing: "0.05em",
-                textTransform: "uppercase", color: T.accent, textDecoration: "none",
-                whiteSpace: "nowrap"
-              }}
-            >
-              Dashboard
-            </Link>
+
             <button
               onClick={handleSignOut}
               style={{
@@ -177,9 +208,12 @@ export function Nav() {
                 letterSpacing: "0.05em",
                 textTransform: "uppercase", color: T.mid, background: "none", border: "none", cursor: "pointer",
                 padding: 0,
-                marginLeft: "0.5rem", // Extra space for logout
-                whiteSpace: "nowrap"
+                marginLeft: isResearcher ? "0.5rem" : "1rem",
+                whiteSpace: "nowrap",
+                opacity: 0.8
               }}
+              onMouseEnter={(e) => e.currentTarget.style.opacity = "1"}
+              onMouseLeave={(e) => e.currentTarget.style.opacity = "0.8"}
             >
               Sign Out
             </button>
@@ -346,47 +380,79 @@ export function Nav() {
           <div style={{ marginTop: "auto", paddingTop: "2rem", borderTop: `1px solid ${T.stone}30` }}>
             {user ? (
               <div style={{ display: "flex", flexDirection: "column", gap: "1.2rem" }}>
-                {isAdmin && (
+                {!isResearcher && (
+                  <div style={{ paddingBottom: "0.5rem", borderBottom: `1px solid ${T.stone}20`, marginBottom: "0.5rem" }}>
+                    <div className="serif" style={{ fontSize: "1.2rem", fontWeight: 700, color: T.ink }}>
+                      {profile?.full_name || "Welcome Back"}
+                    </div>
+                    <div style={{ fontSize: "0.75rem", color: T.mid, textTransform: "uppercase", letterSpacing: "0.05em", marginTop: "0.2rem" }}>
+                      Regular User Account
+                    </div>
+                  </div>
+                )}
+
+                {isResearcher ? (
+                  <>
+                    {isAdmin && (
+                      <Link
+                        to="/admin"
+                        onClick={() => setOpen(false)}
+                        style={{
+                          fontSize: "0.85rem",
+                          fontWeight: 800,
+                          letterSpacing: "0.1em",
+                          textTransform: "uppercase",
+                          color: T.ink,
+                          textDecoration: "none",
+                          opacity: open ? 1 : 0,
+                          transition: "all 0.5s ease 0.55s"
+                        }}
+                      >
+                        Admin Panel
+                      </Link>
+                    )}
+                    <Link
+                      to="/dashboard"
+                      onClick={() => setOpen(false)}
+                      style={{
+                        fontSize: "0.85rem",
+                        fontWeight: 800,
+                        letterSpacing: "0.1em",
+                        textTransform: "uppercase",
+                        color: T.accent,
+                        textDecoration: "none",
+                        opacity: open ? 1 : 0,
+                        transition: "all 0.5s ease 0.6s"
+                      }}
+                    >
+                      Dashboard
+                    </Link>
+                  </>
+                ) : (
                   <Link
-                    to="/admin"
+                    to="/dashboard"
                     onClick={() => setOpen(false)}
                     style={{
-                      fontSize: "0.8rem",
+                      fontSize: "1.4rem",
                       fontWeight: 800,
-                      letterSpacing: "0.15em",
-                      textTransform: "uppercase",
-                      color: T.ink,
+                      color: T.accent,
                       textDecoration: "none",
                       opacity: open ? 1 : 0,
-                      transition: "all 0.5s ease 0.55s"
+                      transition: "all 0.5s ease 0.6s"
                     }}
+                    className="serif"
                   >
-                    Admin Panel
+                    My Dashboard
                   </Link>
                 )}
-                <Link
-                  to="/dashboard"
-                  onClick={() => setOpen(false)}
-                  style={{
-                    fontSize: "0.8rem",
-                    fontWeight: 800,
-                    letterSpacing: "0.15em",
-                    textTransform: "uppercase",
-                    color: T.accent,
-                    textDecoration: "none",
-                    opacity: open ? 1 : 0,
-                    transition: "all 0.5s ease 0.6s"
-                  }}
-                >
-                  Dashboard
-                </Link>
+
                 <button
                   onClick={(e) => { handleSignOut(e); setOpen(false); }}
                   style={{
                     textAlign: "left",
                     fontSize: "0.8rem",
                     fontWeight: 700,
-                    letterSpacing: "0.15em",
+                    letterSpacing: "0.1em",
                     textTransform: "uppercase",
                     color: T.mid,
                     background: "none",
@@ -394,7 +460,8 @@ export function Nav() {
                     cursor: "pointer",
                     padding: 0,
                     opacity: open ? 1 : 0,
-                    transition: "all 0.5s ease 0.65s"
+                    transition: "all 0.5s ease 0.65s",
+                    marginTop: isResearcher ? 0 : "0.5rem"
                   }}
                 >
                   Sign Out

@@ -79,7 +79,7 @@ export function AdminDashboard() {
 
   return (
     <div className="min-h-screen" style={{ background: T.paper }}>
-      <div style={{ padding: "clamp(1.5rem, 5vw, 4rem) var(--side-pad)", maxWidth: 1400, margin: "0 auto" }}>
+      <div style={{ padding: "calc(var(--section-pad) + 60px) var(--side-pad) var(--section-pad)", maxWidth: 1400, margin: "0 auto" }}>
 
         <button
           onClick={() => navigate("/")}
