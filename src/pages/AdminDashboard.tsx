@@ -79,7 +79,7 @@ export function AdminDashboard() {
 
   return (
     <div className="min-h-screen" style={{ background: T.paper }}>
-      <div style={{ padding: "calc(var(--section-pad) + 60px) var(--side-pad) var(--section-pad)", maxWidth: 1400, margin: "0 auto" }}>
+      <div style={{ padding: "calc(var(--section-pad) + 30px) var(--side-pad) var(--section-pad)", maxWidth: 1400, margin: "0 auto" }}>
 
         <button
           onClick={() => navigate("/")}
@@ -197,12 +197,15 @@ export function AdminDashboard() {
                 ) : (
                   <div className="table-responsive">
                     <style>{`
-                      @media (max-width: 640px) {
+                      @media (max-width: 768px) {
                         .hide-mobile { display: none !important; }
+                        .admin-table columns { display: block; width: 100%; }
                         .admin-table thead { display: none; }
-                        .admin-table tr { display: flex; flexDirection: column; padding: 1.5rem; borderBottom: 1px solid ${T.stone}30; }
-                        .admin-table td { padding: 0.25rem 0; border: none !important; textAlign: left !important; }
-                        .admin-table .actions-cell { marginTop: 1rem; display: flex; gap: 0.5rem; justify-content: flex-start !important; }
+                        .admin-table tr { display: block; padding: 1.5rem; border-bottom: 1px solid ${T.stone}30; position: relative; }
+                        .admin-table td { display: block; padding: 0.5rem 0; border: none !important; text-align: left !important; width: 100% !important; }
+                        .admin-table td:before { content: attr(data-label); font-weight: 700; font-size: 0.65rem; text-transform: uppercase; color: ${T.mid}; display: block; margin-bottom: 0.25rem; }
+                        .admin-table .actions-cell { margin-top: 1rem; padding-top: 1rem; border-top: 1px solid ${T.stone}20 !important; }
+                        .admin-table .actions-cell:before { display: none; }
                       }
                       @keyframes spin { to { transform: rotate(360deg); } }
                     `}</style>
@@ -222,8 +225,8 @@ export function AdminDashboard() {
                               <div style={{ fontWeight: 600, color: T.ink, marginBottom: "0.25rem" }}>{post.title}</div>
                               <div style={{ fontSize: "0.7rem", color: T.mid }}>{new Date(post.created_at || '').toLocaleDateString()}</div>
                             </td>
-                            <td style={{ padding: "1.5rem 2rem", fontSize: "0.75rem", color: T.mid, textTransform: "capitalize" }}>{post.type.replace('_', ' ')}</td>
-                            <td style={{ padding: "1.5rem 2rem" }}>
+                            <td data-label="Type" style={{ padding: "1.5rem 2rem", fontSize: "0.75rem", color: T.mid, textTransform: "capitalize" }}>{post.type.replace('_', ' ')}</td>
+                            <td data-label="Status" style={{ padding: "1.5rem 2rem" }}>
                               <span style={{
                                 fontSize: "0.6rem",
                                 fontWeight: 700,
@@ -317,12 +320,12 @@ export function AdminDashboard() {
                               <div style={{ fontWeight: 600, color: T.ink }}>{contact.name || 'Anonymous'}</div>
                               <div style={{ fontSize: "0.75rem", color: "#2563eb", marginTop: "0.2rem" }}>{contact.email}</div>
                             </td>
-                            <td style={{ padding: "1.5rem 2rem" }}>
+                            <td data-label="Message" style={{ padding: "1.5rem 2rem" }}>
                               <div style={{ fontSize: "0.9rem", color: T.mid, lineHeight: 1.6, maxWidth: "500px" }}>
                                 {contact.message}
                               </div>
                             </td>
-                            <td style={{ padding: "1.5rem 2rem", textAlign: "right", fontSize: "0.75rem", color: T.light, whiteSpace: "nowrap" }}>
+                            <td data-label="Date" style={{ padding: "1.5rem 2rem", textAlign: "right", fontSize: "0.75rem", color: T.light, whiteSpace: "nowrap" }}>
                               {new Date(contact.created_at).toLocaleDateString()}
                             </td>
                           </tr>

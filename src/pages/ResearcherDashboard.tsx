@@ -63,7 +63,7 @@ export function ResearcherDashboard() {
 
   return (
     <div className="min-h-screen" style={{ background: T.paper }}>
-      <div style={{ padding: "calc(var(--section-pad) + 60px) var(--side-pad) var(--section-pad)", maxWidth: 1400, margin: "0 auto" }}>
+      <div style={{ padding: "calc(var(--section-pad) + 30px) var(--side-pad) var(--section-pad)", maxWidth: 1400, margin: "0 auto" }}>
         <div style={{ marginBottom: "3rem" }}>
           <h1 className="serif" style={{ fontSize: "var(--fluid-h1)", marginBottom: "0.5rem", color: T.ink }}>
             My Dashboard
@@ -157,13 +157,14 @@ export function ResearcherDashboard() {
             ) : (
               <div className="table-responsive">
                 <style>{`
-                  @media (max-width: 640px) {
-                    .hide-mobile { display: none !important; }
-                    .dashboard-table thead { display: none; }
-                    .dashboard-table tr { display: flex; flexDirection: column; padding: 1.5rem; borderBottom: 1px solid ${T.stone}30; }
-                    .dashboard-table td { padding: 0.25rem 0; border: none !important; }
-                    .dashboard-table .actions-cell { marginTop: 1rem; display: flex; gap: 1rem; }
-                  }
+                    @media (max-width: 768px) {
+                      .hide-mobile { display: none !important; }
+                      .dashboard-table, .dashboard-table tbody, .dashboard-table tr, .dashboard-table td { display: block; width: 100%; }
+                      .dashboard-table tr { padding: 1.5rem; border-bottom: 1px solid ${T.stone}30; position: relative; }
+                      .dashboard-table td { padding: 0.5rem 0; border: none !important; text-align: left !important; }
+                      .dashboard-table td:before { content: attr(data-label); font-weight: 700; font-size: 0.65rem; text-transform: uppercase; color: ${T.mid}; display: block; margin-bottom: 0.25rem; }
+                      .dashboard-table .actions-cell { margin-top: 1rem; padding-top: 1rem; border-top: 1px solid ${T.stone}20 !important; }
+                    }
                 `}</style>
                 <table className="dashboard-table" style={{ width: "100%", borderCollapse: "collapse" }}>
                   <thead className="hide-mobile" style={{ background: T.offWhite, borderBottom: `1px solid ${T.stone}40` }}>
@@ -184,11 +185,11 @@ export function ResearcherDashboard() {
                           <div style={{ fontSize: "0.7rem", color: T.mid }}>{new Date(post.created_at).toLocaleDateString()}</div>
                         </td>
 
-                        <td style={{ padding: "1.5rem 2rem" }}>
+                        <td data-label="Type" style={{ padding: "1.5rem 2rem" }}>
                           <span style={{ fontSize: "0.75rem", color: T.mid, textTransform: "capitalize" }}>{post.type.replace("_", " ")}</span>
                         </td>
 
-                        <td style={{ padding: "1.5rem 2rem" }}>
+                        <td data-label="Status" style={{ padding: "1.5rem 2rem" }}>
                           <span style={{
                             fontSize: "0.6rem",
                             fontWeight: 700,
@@ -203,7 +204,7 @@ export function ResearcherDashboard() {
                           </span>
                         </td>
 
-                        <td style={{ padding: "1.5rem 2rem", fontSize: "0.85rem", color: T.mid, fontWeight: 500 }}>
+                        <td data-label="Views" style={{ padding: "1.5rem 2rem", fontSize: "0.85rem", color: T.mid, fontWeight: 500 }}>
                           {post.view_count || 0}
                         </td>
 

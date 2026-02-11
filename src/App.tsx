@@ -64,7 +64,7 @@ function App() {
             {/* Dashboard / Admin - New Layout */}
             <Route path="/dashboard" element={
               <ProtectedRoute>
-                <><Nav /><div style={{ paddingTop: 20 }}><ResearcherDashboard /></div><Footer /></>
+                <><Nav /><ResearcherDashboard /><Footer /></>
               </ProtectedRoute>
             } />
 
@@ -82,7 +82,7 @@ function App() {
 
             <Route path="/admin" element={
               <ProtectedRoute requireAdmin>
-                <><Nav /><div style={{ paddingTop: 20 }}><AdminDashboard /></div><Footer /></>
+                <><Nav /><AdminDashboard /><Footer /></>
               </ProtectedRoute>
             } />
 
