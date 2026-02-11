@@ -25,9 +25,10 @@ export function ResearcherDashboard() {
 
   const loadPosts = async () => {
     try {
-      const data = await apiGet(`/posts?author_id=${profile?.id}`);                     //
+      const rawData = await apiGet(`/posts?author_id=${profile?.id}`);
+      const data = Array.isArray(rawData) ? rawData : [];
 
-      setPosts(data || []);
+      setPosts(data);
 
       const total = data.length;
       const published = data.filter((p: Post) => p.status === "published")

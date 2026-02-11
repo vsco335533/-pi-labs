@@ -22,9 +22,13 @@ export function AdminDashboard() {
         apiGet("/contact")
       ]);
 
-      setPosts(postsData || []);
-      setResearchers(researchersData || []);
-      setContacts(contactsData || []);
+      const posts = Array.isArray(postsData) ? postsData : [];
+      const researchersList = Array.isArray(researchersData) ? researchersData : [];
+      const contactsList = Array.isArray(contactsData) ? contactsData : [];
+
+      setPosts(posts);
+      setResearchers(researchersList);
+      setContacts(contactsList);
     } catch (error) {
       console.error("Error loading data:", error);
     } finally {

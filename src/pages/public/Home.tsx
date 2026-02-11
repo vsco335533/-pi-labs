@@ -19,7 +19,7 @@ export function Home() {
   const loadLatestPosts = async () => {
     try {
       const data = await apiGet("/posts?limit=3");
-      setLatestPosts(data || []);
+      setLatestPosts(Array.isArray(data) ? data : []);
     } catch (error) {
       console.error("Error loading posts:", error);
     } finally {

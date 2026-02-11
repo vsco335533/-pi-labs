@@ -25,7 +25,7 @@ export function Videos() {
         try {
             setLoading(true);
             const data = await apiGet("/media?type=video");
-            setVideos(data || []);
+            setVideos(Array.isArray(data) ? data : []);
         } catch (error) {
             console.error("Error loading videos:", error);
         } finally {

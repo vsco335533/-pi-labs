@@ -21,8 +21,8 @@ export function Publications() {
             apiGet("/posts?status=published"),
             apiGet("/categories")
         ]).then(([postsData, catsData]) => {
-            setPosts(postsData || []);
-            setCategories(catsData || []);
+            setPosts(Array.isArray(postsData) ? postsData : []);
+            setCategories(Array.isArray(catsData) ? catsData : []);
             setLoading(false);
         });
     }, []);

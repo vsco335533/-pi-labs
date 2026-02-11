@@ -40,7 +40,7 @@ export function Gallery() {
         (async () => {
             try {
                 const cats = await apiGet('/image-categories');
-                setCategoriesList(cats || []);
+                setCategoriesList(Array.isArray(cats) ? cats : []);
             } catch (e) {
                 console.error('Failed to load image categories:', e);
             }
@@ -61,7 +61,7 @@ export function Gallery() {
         try {
             // Load unattached admin uploads mostly
             const data = await apiGet("/media?type=image&unattached=1&admin_uploads=1");
-            setImages(data || []);
+            setImages(Array.isArray(data) ? data : []);
         } catch (error) {
             console.error("Error loading images:", error);
         } finally {
@@ -253,7 +253,7 @@ export function Gallery() {
                             return (
                                 <div key={cat.id}>
                                     <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "1.5rem", borderBottom: `1px solid ${T.stone}40`, paddingBottom: "0.5rem" }}>
-                                        {editingCategory?.id === cat.id ? (
+                                        {editingCategory && editingCategory.id === cat.id ? (
                                             <div style={{ display: "flex", gap: "0.5rem" }}>
                                                 <input value={editingCategory.name} onChange={e => setEditingCategory({ id: editingCategory!.id, name: e.target.value })} style={{ padding: "0.4rem" }} />
                                                 <button onClick={handleUpdateCategory}><Check size={16} color="green" /></button>
