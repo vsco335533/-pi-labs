@@ -53,17 +53,48 @@ export function Nav() {
         boxShadow: scrolled ? "0 1px 30px rgba(0,0,0,0.04)" : "none",
       }}
     >
-      <Link to="/" style={{ display: "flex", alignItems: "center", gap: "0.7rem", textDecoration: 'none', color: 'inherit', flexShrink: 0, zIndex: 1100 }}>
-        <img src={LOGO_SRC} alt="π" style={{ height: scrolled ? 32 : 38, width: scrolled ? 32 : 38, objectFit: "contain", transition: "all 0.3s" }} />
-        <span className="serif" style={{
-          fontSize: "clamp(0.9rem, 1.2vw + 0.4rem, 1.05rem)",
-          letterSpacing: "-0.01em",
-          fontWeight: 600,
-          whiteSpace: "nowrap"
+      <Link to="/" style={{
+        display: "flex",
+        alignItems: "center",
+        gap: "min(0.8rem, 3vw)",
+        textDecoration: 'none',
+        color: 'inherit',
+        flex: 1,
+        minWidth: 0,
+        zIndex: 1100
+      }}>
+        <img src={LOGO_SRC} alt="π" style={{ height: scrolled ? 34 : 42, width: scrolled ? 34 : 42, objectFit: "contain", transition: "all 0.3s", flexShrink: 0 }} />
+        <div style={{
+          display: "flex",
+          flexDirection: "column",
+          gap: "2px",
+          alignItems: "flex-start",
+          minWidth: 0
         }}>
-          Pi Labs Commons
-          <span className="hidden-mobile"> Research Foundation</span>
-        </span>
+          <span className="serif" style={{
+            fontSize: "clamp(0.9rem, 3.5vw, 1.1rem)",
+            fontWeight: 800,
+            color: T.ink,
+            lineHeight: 1,
+            letterSpacing: "-0.02em"
+          }}>
+            Pi Labs
+          </span>
+          <span style={{
+            background: T.ink,
+            color: T.paper,
+            padding: "2px 6px",
+            fontSize: "clamp(0.55rem, 2.2vw, 0.7rem)",
+            fontWeight: 700,
+            textTransform: "uppercase",
+            letterSpacing: "0.08em",
+            whiteSpace: "nowrap",
+            borderRadius: "2px",
+            lineHeight: 1.2
+          }}>
+            Commons Research Foundation
+          </span>
+        </div>
       </Link>
 
       {/* Desktop links */}
@@ -166,7 +197,8 @@ export function Nav() {
           position: "relative",
           transition: "all 0.3s",
           outline: "none",
-          WebkitTapHighlightColor: "transparent"
+          WebkitTapHighlightColor: "transparent",
+          flexShrink: 0
         }}
         className="hidden-desktop"
         aria-label="Menu"
