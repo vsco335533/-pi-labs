@@ -1,0 +1,80 @@
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { AuthProvider } from './contexts/AuthContext';
+import { LanguageProvider } from './contexts/LanguageContext';
+import { Header } from './components/Layout/Header';
+import { Footer } from './components/Layout/Footer';
+import { BackButton } from './components/Common/BackButton';
+import { ProtectedRoute } from './components/ProtectedRoute';
+import { Home } from './pages/Home';
+import { Login } from './pages/Login';
+import { Research } from './pages/Research';
+import { Videos } from './pages/Videos';
+import { Gallery } from './pages/Gallery';
+import { PostDetail } from './pages/PostDetail';
+import { Contact } from './pages/Contact';
+import { ResearcherDashboard } from './pages/ResearcherDashboard';
+import { AdminDashboard } from './pages/AdminDashboard';
+import { PostEditor } from './pages/PostEditor';
+
+function App() {
+  return (
+    <AuthProvider>
+      <LanguageProvider>
+        <Router>
+          <div className="flex flex-col min-h-screen">
+            <Header />
+            <BackButton />
+            <main className="flex-1">
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/research" element={<Research />} />
+                <Route path="/videos" element={<Videos />} />
+                <Route path="/contact" element={<Contact />} />
+                <Route path="/gallery" element={<Gallery />} />
+                <Route path="/posts/:slug" element={<PostDetail />} />
+
+                <Route
+                  path="/dashboard"
+                  element={
+                    <ProtectedRoute>
+                      <ResearcherDashboard />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/dashboard/new-post"
+                  element={
+                    <ProtectedRoute>
+                      <PostEditor />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/dashboard/edit/:id"
+                  element={
+                    <ProtectedRoute>
+                      <PostEditor />
+                    </ProtectedRoute>
+                  }
+                />
+
+                <Route
+                  path="/admin"
+                  element={
+                    <ProtectedRoute requireAdmin>
+                      <AdminDashboard />
+                    </ProtectedRoute>
+                  }
+                />
+              </Routes>
+            </main>
+            <Footer />
+          </div>
+        </Router>
+      </LanguageProvider>
+    </AuthProvider>
+  );
+}
+
+export default App;
