@@ -244,30 +244,58 @@ export function Nav() {
         }}
         onClick={(e) => e.stopPropagation()}
       >
-        <div style={{ padding: "1.5rem 2.5rem 0", display: "flex", justifyContent: "flex-end", flexShrink: 0 }}>
+        <div style={{
+          padding: "1.2rem 1.5rem 1rem 2rem",
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          borderBottom: "1px solid rgba(24,24,22,0.05)",
+          flexShrink: 0
+        }}>
+          <div style={{ display: "flex", alignItems: "center", gap: "0.6rem" }}>
+            <img src={LOGO_SRC} alt="π" style={{ height: 32, width: 32, objectFit: "contain" }} />
+            <div style={{ display: "flex", flexDirection: "column", gap: "1px" }}>
+              <span className="serif" style={{ fontSize: "0.95rem", fontWeight: 800, color: T.ink, lineHeight: 1 }}>
+                Pi Labs
+              </span>
+              <span style={{
+                background: T.ink,
+                color: T.paper,
+                padding: "1px 4px",
+                fontSize: "0.55rem",
+                fontWeight: 700,
+                textTransform: "uppercase",
+                letterSpacing: "0.04em",
+                borderRadius: "2px"
+              }}>
+                Commons Research Foundation
+              </span>
+            </div>
+          </div>
+
           <button
             onClick={() => setOpen(false)}
             style={{
-              width: 48, height: 48, borderRadius: "50%",
-              background: "rgba(24,24,22,0.05)",
+              width: 36, height: 36, borderRadius: "50%",
+              background: "rgba(24,24,22,0.04)",
               border: "none", cursor: "pointer",
               display: "flex", alignItems: "center", justifyContent: "center",
-              transition: "all 0.3s ease",
+              transition: "all 0.2s ease",
               outline: "none",
               WebkitTapHighlightColor: "transparent"
             }}
-            onMouseEnter={(e) => e.currentTarget.style.background = "rgba(24,24,22,0.1)"}
-            onMouseLeave={(e) => e.currentTarget.style.background = "rgba(24,24,22,0.05)"}
+            onMouseEnter={(e) => e.currentTarget.style.background = "rgba(24,24,22,0.08)"}
+            onMouseLeave={(e) => e.currentTarget.style.background = "rgba(24,24,22,0.04)"}
             aria-label="Close menu"
           >
-            <div style={{ position: "relative", width: 20, height: 20 }}>
-              <span style={{ position: "absolute", top: "50%", left: 0, width: "100%", height: 2, background: "#181816", transform: "rotate(45deg)", borderRadius: 2 }} />
-              <span style={{ position: "absolute", top: "50%", left: 0, width: "100%", height: 2, background: "#181816", transform: "rotate(-45deg)", borderRadius: 2 }} />
+            <div style={{ position: "relative", width: 14, height: 14 }}>
+              <span style={{ position: "absolute", top: "50%", left: 0, width: "100%", height: 1.5, background: "#181816", transform: "rotate(45deg)", borderRadius: 1 }} />
+              <span style={{ position: "absolute", top: "50%", left: 0, width: "100%", height: 1.5, background: "#181816", transform: "rotate(-45deg)", borderRadius: 1 }} />
             </div>
           </button>
         </div>
 
-        <div style={{ padding: "2rem 2.5rem 2.5rem", flex: 1, display: "flex", flexDirection: "column" }}>
+        <div style={{ padding: "1rem 2.5rem 2.5rem", flex: 1, display: "flex", flexDirection: "column" }}>
           <div style={{ display: "flex", flexDirection: "column", gap: "0.8rem" }}>
             {links.map((l, i) => (
               <Link

@@ -9,7 +9,7 @@ export function Footer() {
                 <div style={{ maxWidth: 340 }}>
                     <img src={LOGO_SRC} alt="π" style={{ height: 38, width: 38, marginBottom: "0.8rem", filter: "invert(1) brightness(0.9)" }} />
                     <p className="body-serif" style={{ fontSize: "0.88rem", lineHeight: 1.7, color: "#777" }}>
-                        Pi Labs Commons Research Foundation. Independent research and praxis at the intersection of social theory, technology, and the commons.
+                        Pi Labs Commons Research Foundation. Independent research and praxis at the intersection of social theory, technology, <br/>and the commons.
                     </p>
                 </div>
                 {[
