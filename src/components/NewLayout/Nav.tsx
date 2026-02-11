@@ -9,7 +9,7 @@ export function Nav() {
   const [open, setOpen] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
-  const { user, signOut } = useAuth();
+  const { user, signOut, isAdmin } = useAuth();
   const path = location.pathname;
 
   useEffect(() => {
@@ -48,7 +48,7 @@ export function Nav() {
         backdropFilter: open ? "none" : "blur(24px)",
         WebkitBackdropFilter: open ? "none" : "blur(24px)",
         background: open ? "#f2f1ed" : (scrolled ? "rgba(242,241,237,0.95)" : "rgba(242,241,237,0.8)"),
-        borderBottom: `1px solid rgba(24,24,22,${scrolled ? 0.06 : 0.03})`,
+        borderBottom: `1px solid rgba(24, 24, 22, ${scrolled ? 0.06 : 0.03})`,
         transition: "all 0.4s cubic-bezier(0.16, 1, 0.3, 1)",
         boxShadow: scrolled ? "0 1px 30px rgba(0,0,0,0.04)" : "none",
       }}
@@ -56,53 +56,55 @@ export function Nav() {
       <Link to="/" style={{
         display: "flex",
         alignItems: "center",
-        gap: "min(0.8rem, 3vw)",
+        gap: "0.5rem",
         textDecoration: 'none',
         color: 'inherit',
-        flex: 1,
-        minWidth: 0,
-        zIndex: 1100
+        flexShrink: 0,
+        zIndex: 1100,
+        marginRight: "0.5rem"
       }}>
-        <img src={LOGO_SRC} alt="π" style={{ height: scrolled ? 34 : 42, width: scrolled ? 34 : 42, objectFit: "contain", transition: "all 0.3s", flexShrink: 0 }} />
-        <div style={{
+        <img src={LOGO_SRC} alt="π" style={{ height: scrolled ? 34 : 40, width: scrolled ? 34 : 40, objectFit: "contain", transition: "all 0.3s", flexShrink: 0 }} />
+        <div className="hidden-tablet" style={{
           display: "flex",
           flexDirection: "column",
-          gap: "2px",
+          gap: "1px",
           alignItems: "flex-start",
           minWidth: 0
         }}>
           <span className="serif" style={{
-            fontSize: "clamp(0.9rem, 3.5vw, 1.1rem)",
+            fontSize: "clamp(0.9rem, 1.2vw, 1.1rem)",
             fontWeight: 800,
             color: T.ink,
             lineHeight: 1,
-            letterSpacing: "-0.02em"
+            letterSpacing: "-0.01em"
           }}>
             Pi Labs
           </span>
           <span style={{
             background: T.ink,
             color: T.paper,
-            padding: "2px 6px",
-            fontSize: "clamp(0.55rem, 2.2vw, 0.7rem)",
+            padding: "2px 5px",
+            fontSize: "clamp(0.55rem, 0.65vw, 0.7rem)",
             fontWeight: 700,
             textTransform: "uppercase",
-            letterSpacing: "0.08em",
+            letterSpacing: "0.06em",
             whiteSpace: "nowrap",
             borderRadius: "2px",
-            lineHeight: 1.2
+            lineHeight: 1.1
           }}>
             Commons Research Foundation
           </span>
         </div>
       </Link>
 
-      {/* Desktop links */}
-      <div style={{
+      <div className="hidden-desktop-small" style={{
         display: "flex",
-        gap: "clamp(0.5rem, 1vw, 1.8rem)",
-        alignItems: "center"
-      }} className="hidden-mobile">
+        gap: "clamp(0.8rem, 1vw, 1.5rem)",
+        alignItems: "center",
+        flex: 1,
+        justifyContent: "center",
+        padding: "0 1rem"
+      }}>
         {links.map((l) => (
           <Link
             key={l.to}
@@ -110,11 +112,11 @@ export function Nav() {
             style={{
               fontSize: "0.72rem",
               fontWeight: 600,
-              letterSpacing: "0.06em",
+              letterSpacing: "0.04em",
               textTransform: "uppercase",
               color: isActive(l.to) ? T.ink : T.mid,
               borderBottom: isActive(l.to) ? `1.5px solid ${T.accent}` : "1.5px solid transparent",
-              paddingBottom: "2px",
+              paddingBottom: "1px",
               transition: "all 0.3s",
               textDecoration: "none",
               whiteSpace: "nowrap"
@@ -123,24 +125,44 @@ export function Nav() {
             {l.label}
           </Link>
         ))}
+      </div>
 
-        {/* Auth Link */}
+      <div className="hidden-desktop-small" style={{
+        display: "flex",
+        alignItems: "center",
+        gap: "1.2rem",
+        marginLeft: "auto",
+        flexShrink: 0
+      }}>
         {user ? (
           <div style={{
             display: "flex",
             gap: "1rem",
             alignItems: "center",
-            borderLeft: `1px solid ${T.stone}`,
-            paddingLeft: "1rem",
-            marginLeft: "0.5rem",
+            borderLeft: `1px solid ${T.stone}30`,
+            paddingLeft: "1.2rem",
             flexShrink: 0
           }}>
+            {isAdmin && (
+              <Link
+                to="/admin"
+                style={{
+                  fontSize: "0.72rem",
+                  fontWeight: 600,
+                  letterSpacing: "0.05em",
+                  textTransform: "uppercase", color: T.ink, textDecoration: "none",
+                  whiteSpace: "nowrap"
+                }}
+              >
+                Admin Panel
+              </Link>
+            )}
             <Link
               to="/dashboard"
               style={{
                 fontSize: "0.72rem",
                 fontWeight: 600,
-                letterSpacing: "0.06em",
+                letterSpacing: "0.05em",
                 textTransform: "uppercase", color: T.accent, textDecoration: "none",
                 whiteSpace: "nowrap"
               }}
@@ -152,9 +174,10 @@ export function Nav() {
               style={{
                 fontSize: "0.72rem",
                 fontWeight: 600,
-                letterSpacing: "0.06em",
+                letterSpacing: "0.05em",
                 textTransform: "uppercase", color: T.mid, background: "none", border: "none", cursor: "pointer",
                 padding: 0,
+                marginLeft: "0.5rem", // Extra space for logout
                 whiteSpace: "nowrap"
               }}
             >
@@ -167,15 +190,14 @@ export function Nav() {
             style={{
               fontSize: "0.72rem",
               fontWeight: 600,
-              letterSpacing: "0.06em",
+              letterSpacing: "0.05em",
               textTransform: "uppercase",
               color: T.paper,
               background: T.ink,
               textDecoration: "none",
               whiteSpace: "nowrap",
-              padding: "0.45rem 1.2rem",
+              padding: "0.4rem 1rem",
               borderRadius: "4px",
-              marginLeft: "0.5rem",
               transition: "all 0.3s"
             }}
           >
@@ -324,6 +346,24 @@ export function Nav() {
           <div style={{ marginTop: "auto", paddingTop: "2rem", borderTop: `1px solid ${T.stone}30` }}>
             {user ? (
               <div style={{ display: "flex", flexDirection: "column", gap: "1.2rem" }}>
+                {isAdmin && (
+                  <Link
+                    to="/admin"
+                    onClick={() => setOpen(false)}
+                    style={{
+                      fontSize: "0.8rem",
+                      fontWeight: 800,
+                      letterSpacing: "0.15em",
+                      textTransform: "uppercase",
+                      color: T.ink,
+                      textDecoration: "none",
+                      opacity: open ? 1 : 0,
+                      transition: "all 0.5s ease 0.55s"
+                    }}
+                  >
+                    Admin Panel
+                  </Link>
+                )}
                 <Link
                   to="/dashboard"
                   onClick={() => setOpen(false)}
