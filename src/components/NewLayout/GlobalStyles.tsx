@@ -62,9 +62,9 @@ body {
 
 .nav-link {
   position: relative;
-  font-size: 0.78rem;
+  font-size: 0.76rem;
   font-weight: 500;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   color: ${T.mid};
   text-decoration: none;

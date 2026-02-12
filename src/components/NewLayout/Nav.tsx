@@ -99,11 +99,11 @@ export function Nav() {
 
       <div className="hidden-desktop-small" style={{
         display: "flex",
-        gap: "clamp(0.8rem, 1vw, 1.5rem)",
+        gap: "clamp(1.2rem, 1.8vw, 2.5rem)",
         alignItems: "center",
         flex: 1,
         justifyContent: "center",
-        padding: "0 1rem"
+        padding: "0 1.5rem"
       }}>
         {links.map((l) => (
           <Link
@@ -195,15 +195,15 @@ export function Nav() {
           <Link
             to="/login"
             style={{
-              fontSize: "0.78rem",
+              fontSize: "0.76rem",
               fontWeight: 500,
-              letterSpacing: "0.08em",
+              letterSpacing: "0.12em",
               textTransform: "uppercase",
               color: T.paper,
               background: T.ink,
               textDecoration: "none",
               whiteSpace: "nowrap",
-              padding: "0.45rem 1.1rem",
+              padding: "0.5rem 1.4rem",
               borderRadius: "4px",
               transition: "all 0.3s"
             }}
