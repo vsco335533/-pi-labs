@@ -109,18 +109,7 @@ export function Nav() {
           <Link
             key={l.to}
             to={l.to}
-            style={{
-              fontSize: "0.72rem",
-              fontWeight: 600,
-              letterSpacing: "0.04em",
-              textTransform: "uppercase",
-              color: isActive(l.to) ? T.ink : T.mid,
-              borderBottom: isActive(l.to) ? `1.5px solid ${T.accent}` : "1.5px solid transparent",
-              paddingBottom: "1px",
-              transition: "all 0.3s",
-              textDecoration: "none",
-              whiteSpace: "nowrap"
-            }}
+            className={`nav-link ${isActive(l.to) ? 'active' : ''}`}
           >
             {l.label}
           </Link>
@@ -148,26 +137,15 @@ export function Nav() {
                 {isAdmin && (
                   <Link
                     to="/admin"
-                    style={{
-                      fontSize: "0.72rem",
-                      fontWeight: 600,
-                      letterSpacing: "0.05em",
-                      textTransform: "uppercase", color: T.ink, textDecoration: "none",
-                      whiteSpace: "nowrap"
-                    }}
+                    className="nav-link"
                   >
                     Admin Panel
                   </Link>
                 )}
                 <Link
                   to="/dashboard"
-                  style={{
-                    fontSize: "0.72rem",
-                    fontWeight: 600,
-                    letterSpacing: "0.05em",
-                    textTransform: "uppercase", color: T.accent, textDecoration: "none",
-                    whiteSpace: "nowrap"
-                  }}
+                  className="nav-link active"
+                  style={{ color: T.accent }}
                 >
                   Dashboard
                 </Link>
@@ -202,18 +180,13 @@ export function Nav() {
 
             <button
               onClick={handleSignOut}
+              className="nav-link"
               style={{
-                fontSize: "0.72rem",
-                fontWeight: 600,
-                letterSpacing: "0.05em",
-                textTransform: "uppercase", color: T.mid, background: "none", border: "none", cursor: "pointer",
+                background: "none", border: "none", cursor: "pointer",
                 padding: 0,
                 marginLeft: isResearcher ? "0.5rem" : "1rem",
-                whiteSpace: "nowrap",
                 opacity: 0.8
               }}
-              onMouseEnter={(e) => e.currentTarget.style.opacity = "1"}
-              onMouseLeave={(e) => e.currentTarget.style.opacity = "0.8"}
             >
               Sign Out
             </button>
@@ -222,15 +195,15 @@ export function Nav() {
           <Link
             to="/login"
             style={{
-              fontSize: "0.72rem",
-              fontWeight: 600,
-              letterSpacing: "0.05em",
+              fontSize: "0.78rem",
+              fontWeight: 500,
+              letterSpacing: "0.08em",
               textTransform: "uppercase",
               color: T.paper,
               background: T.ink,
               textDecoration: "none",
               whiteSpace: "nowrap",
-              padding: "0.4rem 1rem",
+              padding: "0.45rem 1.1rem",
               borderRadius: "4px",
               transition: "all 0.3s"
             }}
