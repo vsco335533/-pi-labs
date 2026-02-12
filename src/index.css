@@ -4,6 +4,21 @@
 
 
 .copyleft {
-  display:inline-block;
+  display: inline-block;
   transform: rotate(180deg);
+}
+
+/* Mobile-specific styles for Home page hero section */
+@media (max-width: 768px) {
+  .hero-section {
+    padding-top: 6rem !important;
+  }
+
+  .hero-tag {
+    margin-bottom: 0.5rem !important;
+  }
+
+  .hero-heading {
+    font-size: 3rem !important;
+  }
 }

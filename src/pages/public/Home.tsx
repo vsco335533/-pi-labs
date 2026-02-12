@@ -36,7 +36,7 @@ export function Home() {
   return (
     <div ref={ref}>
       {/* Hero */}
-      <section style={{
+      <section className="hero-section" style={{
         minHeight: "100vh",
         display: "flex",
         flexDirection: "column",
@@ -51,12 +51,12 @@ export function Home() {
         </div>
 
         <div style={{ maxWidth: 860, position: "relative", zIndex: 2 }}>
-          <div className="rv" style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem", fontSize: "0.68rem", fontWeight: 700, letterSpacing: "0.16em", textTransform: "uppercase", color: T.accent, marginBottom: "2rem" }}>
+          <div className="rv hero-tag" style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem", fontSize: "0.68rem", fontWeight: 700, letterSpacing: "0.16em", textTransform: "uppercase", color: T.accent, marginBottom: "2rem" }}>
             <span style={{ width: 24, height: 1.5, background: T.accent, display: "inline-block" }} />
             Research · Praxis · Commons
           </div>
 
-          <h1 className="serif rv" style={{ fontSize: "var(--fluid-h1)", lineHeight: 1.05, letterSpacing: "-0.03em", marginBottom: "2rem" }}>
+          <h1 className="serif rv hero-heading" style={{ fontSize: "var(--fluid-h1)", lineHeight: 1.05, letterSpacing: "-0.03em", marginBottom: "2rem" }}>
             Knowledge and technology<br />
             <em style={{ color: T.accent }}>for the many,</em><br />
             not the few.

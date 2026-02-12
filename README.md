@@ -143,3 +143,5 @@ All database schema changes are managed through Supabase migrations:
 ## Support
 
 The platform includes demo data with sample research posts to demonstrate functionality. All features are production-ready and follow security best practices.
+
+<!-- <h1 className="serif rv hero-heading" style={{ fontSize: "var(--fluid-h1)", lineHeight: 1.05, letterSpacing: "-0.03em", marginBottom: "2rem" }}> -->
