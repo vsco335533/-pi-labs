@@ -50,16 +50,16 @@ export function Home() {
           <span className="serif" style={{ fontSize: "clamp(12rem, 40vw, 28rem)", lineHeight: 1, color: T.ink }}>π</span>
         </div>
 
-        <div style={{ maxWidth: 860, position: "relative", zIndex: 2 }}>
+        <div style={{ maxWidth: 1100, position: "relative", zIndex: 2 }}>
           <div className="rv hero-tag" style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem", fontSize: "0.68rem", fontWeight: 700, letterSpacing: "0.16em", textTransform: "uppercase", color: T.accent, marginBottom: "2rem" }}>
             <span style={{ width: 24, height: 1.5, background: T.accent, display: "inline-block" }} />
             Research · Praxis · Commons
           </div>
 
-          <h1 className="serif rv hero-heading" style={{ fontSize: "var(--fluid-h1)", lineHeight: 1.05, letterSpacing: "-0.03em", marginBottom: "2rem" }}>
+          <h1 className="serif rv hero-heading" style={{ fontSize: "clamp(2.8rem, 8vw, 5.5rem)", lineHeight: 1.08, letterSpacing: "-0.02em", marginBottom: "2rem", fontWeight: 900 }}>
             Knowledge and technology<br />
-            <em style={{ color: T.accent }}>for the many,</em><br />
-            not the few.
+            <em style={{ color: T.accent, fontStyle: "italic", fontWeight: 900 }}>for the many,</em><br />
+            <span style={{ display: "inline-block", paddingLeft: "0.15em" }}>not the few.</span>
           </h1>
 
           <p className="body-serif rv" style={{ fontSize: "clamp(1.02rem, 1.6vw, 1.15rem)", color: T.light, maxWidth: 600, lineHeight: 1.7, marginBottom: "2.5rem" }}>
@@ -104,7 +104,7 @@ export function Home() {
       {/* Four pillars preview */}
       <section style={{ padding: "var(--section-pad) var(--side-pad)", background: T.offWhite }}>
         <SectionTag>What We Do</SectionTag>
-        <h2 className="serif rv" style={{ fontSize: "var(--fluid-h2)", lineHeight: 1.05, marginBottom: "1rem" }}>
+        <h2 className="serif rv" style={{ fontSize: "clamp(2.4rem, 7vw, 4.5rem)", lineHeight: 1.1, marginBottom: "1.5rem", fontWeight: 900 }}>
           Theory, experimentation,<br />and grounded practice.
         </h2>
         <p className="rv body-serif" style={{ fontSize: "1rem", color: T.light, maxWidth: 560, lineHeight: 1.7, marginBottom: "3rem" }}>
