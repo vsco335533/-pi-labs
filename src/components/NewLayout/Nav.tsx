@@ -29,11 +29,9 @@ export function Nav() {
   const links = [
     { to: "/about", label: "About" },
     { to: "/work", label: "Work" },
-    { to: "/centers", label: "Centers" },
     { to: "/ecosystem", label: "Ecosystem" },
     { to: "/publications", label: "Publications" },
     { to: "/videos", label: "Multimedia" },
-    { to: "/gallery", label: "Gallery" },
     { to: "/contact", label: "Contact" },
   ];
 
@@ -102,8 +100,8 @@ export function Nav() {
         gap: "clamp(1.2rem, 1.8vw, 2.5rem)",
         alignItems: "center",
         flex: 1,
-        justifyContent: "center",
-        padding: "0 1.5rem"
+        justifyContent: "flex-end",
+        padding: "0 2.5rem"
       }}>
         {links.map((l) => (
           <Link
@@ -195,7 +193,7 @@ export function Nav() {
           <Link
             to="/login"
             style={{
-              fontSize: "0.76rem",
+              fontSize: "0.82rem",
               fontWeight: 500,
               letterSpacing: "0.12em",
               textTransform: "uppercase",

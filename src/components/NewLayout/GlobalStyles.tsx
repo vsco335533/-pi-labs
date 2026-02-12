@@ -62,7 +62,7 @@ body {
 
 .nav-link {
   position: relative;
-  font-size: 0.76rem;
+  font-size: 0.82rem;
   font-weight: 500;
   letter-spacing: 0.12em;
   text-transform: uppercase;
