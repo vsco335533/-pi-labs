@@ -84,7 +84,7 @@ export function Header() {
                 {menuOpen && (
                   <div className="absolute right-0 top-14 w-44 bg-white border rounded-lg shadow-lg z-50 py-2">
                     <Link
-                      to="/dashboard"
+                      to="/dasboard"
                       onClick={() => setMenuOpen(false)}
                       className="flex items-center gap-2 px-4 py-2 hover:bg-gray-100 transition-colors"
                     >
@@ -119,13 +119,13 @@ export function Header() {
                 )}
               </>
             ) : (
-              <Link
-                to="/login"
+              <a
+                href="https://lms.pilabs.cc/"
                 className="hidden md:flex items-center gap-2 px-3 py-2 md:px-4 md:py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors text-sm font-medium"
               >
                 <User className="w-4 h-4" />
                 <span>Sign In</span>
-              </Link>
+              </a>
             )}
 
             {/* MOBILE MENU TOGGLE */}
@@ -229,14 +229,14 @@ export function Header() {
                 ) : (
                   <div className="flex flex-col gap-6">
                     <p className="text-gray-500 mb-2">Sign in to access your dashboard and manage research publications.</p>
-                    <Link
-                      to="/login"
+                    <a
+                      href="https://lms.pilabs.cc/"
                       onClick={() => setMobileMenuOpen(false)}
                       className="flex items-center justify-center gap-3 w-full py-5 bg-gray-900 text-white rounded-2xl font-bold text-lg shadow-xl hover:bg-gray-800 hover:scale-[1.02] active:scale-[0.98] transition-all"
                     >
                       <User className="w-5 h-5" />
                       Sign In Now
-                    </Link>
+                    </a>
                   </div>
                 )}
               </div>
@@ -247,4 +247,3 @@ export function Header() {
     </header>
   );
 }
-

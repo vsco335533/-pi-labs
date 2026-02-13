@@ -14,7 +14,7 @@ export function Footer() {
                 </div>
                 {[
                     { title: "Foundation", links: [["About", "/about"], ["Our Work", "/work"], ["Our Centers", "/work#centers"], ["Publications", "/publications"]] },
-                    { title: "Ecosystem", links: [["Radius EduTech", "/ecosystem"], ["Octacomm", "/ecosystem"], ["Vanguard Journal", "/publications"]] },
+                    { title: "Ecosystem", links: [["Radius EduTech", "/ecosystem"], ["Octacomm", "/ecosystem"]] },
                     { title: "Connect", links: [["Contact", "/contact"], ["Email", "/contact"], ["GitHub", "/contact"]] },
                 ].map((col) => (
                     <div key={col.title} style={{ flex: "1 1 180px", minWidth: "150px" }}>

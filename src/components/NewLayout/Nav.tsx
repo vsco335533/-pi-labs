@@ -190,8 +190,8 @@ export function Nav() {
             </button>
           </div>
         ) : (
-          <Link
-            to="/login"
+          <a
+            href="https://lms.pilabs.cc/"
             style={{
               fontSize: "0.82rem",
               fontWeight: 500,
@@ -203,11 +203,13 @@ export function Nav() {
               whiteSpace: "nowrap",
               padding: "0.5rem 1.4rem",
               borderRadius: "4px",
-              transition: "all 0.3s"
+              transition: "all 0.3s",
+              display: "inline-block",
+              cursor: "pointer"
             }}
           >
             Sign In
-          </Link>
+          </a>
         )}
       </div>
 
@@ -439,8 +441,8 @@ export function Nav() {
                 </button>
               </div>
             ) : (
-              <Link
-                to="/login"
+              <a
+                href="https://lms.pilabs.cc/"
                 onClick={() => setOpen(false)}
                 style={{
                   display: "block",
@@ -456,11 +458,12 @@ export function Nav() {
                   textDecoration: "none",
                   boxShadow: "0 10px 20px rgba(0,0,0,0.1)",
                   opacity: open ? 1 : 0,
-                  transition: "all 0.5s ease 0.6s"
+                  transition: "all 0.5s ease 0.6s",
+                  cursor: "pointer"
                 }}
               >
                 Sign In
-              </Link>
+              </a>
             )}
 
             <div style={{

@@ -60,7 +60,7 @@ export function About() {
             { year: "2018–2021", text: "Deepening theoretical work in political economy. Experiments with community-based technology and educational models. Early formulations of commons-based institutional design." },
             { year: "2021–2023", text: "Technology experiments in AI and digital systems. Development of offline-first and community-embedded tools. Expanding research into post-capitalist praxis and Indian social formations." },
             { year: "2024", text: "Formal establishment of Pi Labs Commons Research Foundation. Launch of community centers, incubation of mission-aligned enterprises Radius EduTech and Octacomm." },
-            { year: "2025–Present", text: "Active publishing through Vanguard journal. Expanding community center network. Continued research, technology experiments, and ecosystem growth." },
+            { year: "2025–Present", text: "Expanding community center network. Continued research, technology experiments, and ecosystem growth." },
           ].map((item) => (
             <div key={item.year} className="rv" style={{ display: "flex", gap: "2rem", marginBottom: "2rem", paddingBottom: "2rem", borderBottom: `1px solid rgba(24,24,22,0.06)` }}>
               <span className="mono" style={{ fontSize: "0.75rem", color: T.accent, letterSpacing: "0.05em", minWidth: 100, flexShrink: 0, paddingTop: 3 }}>{item.year}</span>

@@ -21,20 +21,20 @@ export function Ecosystem() {
                             name: "Radius EduTech",
                             type: "Education Technology",
                             desc: "Building sovereign educational infrastructure for schools in the Global South. Open source, offline-first, and privacy-respecting learning management systems.",
-                            status: "Active · Since 2024"
+                            status: "Active"
                         },
                         {
                             name: "Octacomm",
                             type: "Digital Services Cooperative",
                             desc: "A worker-owned cooperative providing high-end software development, design, and digital strategy services to ethical organizations and progressive movements.",
-                            status: "Incubating · Launching 2025"
-                        },
-                        {
-                            name: "Vanguard Journal",
-                            type: "Publishing House",
-                            desc: "An independent publishing house for radical social theory and commons-based research. Producing books, journals, and digital media.",
                             status: "Active"
-                        }
+                        },
+                        // {
+                        //     name: "Vanguard Journal",
+                        //     type: "Publishing House",
+                        //     desc: "An independent publishing house for radical social theory and commons-based research. Producing books, journals, and digital media.",
+                        //     status: "Active"
+                        // }
                     ].map((org) => (
                         <div key={org.name} className="rv" style={{ padding: "2.5rem", background: T.offWhite, borderRadius: 4, display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "2rem" }}>
                             <div>
